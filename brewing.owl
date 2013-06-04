@@ -1,0 +1,2717 @@
+@prefix : <http://microbrew.it/beer.owl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix mb: <http://microbrew.it/beer.owl#> .
+@prefix jms: <http://jena.hpl.hp.com/2003/08/jms#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rss: <http://purl.org/rss/1.0/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix daml: <http://www.daml.org/2001/03/daml+oil#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2001/vcard-rdf/3.0#> .
+@prefix wgs84_pos: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@base <http://microbrew.it/beer.owl> .
+
+<http://microbrew.it/beer.owl> rdf:type owl:Ontology ;
+                               
+                               rdfs:label "Beer Ontology, OWL Lite" ;
+                               
+                               rdfs:comment """
+    	An ontology that models types of beer and brewers/brands.
+	http://purl.org/net/ontology/beer.owl
+	
+	WordNet		beer -- (a general name for alcoholic beverages made by fermenting a cereal (or mixture of cereals) flavored with hops)
+			http://www.cogsci.princeton.edu/cgi-bin/webwn2.0?stage=1&word=beer
+	
+	History		Based on http://www.csd.abdn.ac.uk/research/AgentCities/ontologies/beer#
+	
+    	2004-04-02	* Converted to OWL-Lite by David and http://www.mindswap.org/2002/owl.html
+			* Changed concept hierarchy of beers: added top/bottom-fermention.
+	2004-08-24	* Removed FuzzyMeasure.
+			* Added some German labels, a Property, some Instances.
+
+	@todo		* revamp completely, use http://de.wikipedia.org/wiki/Bier
+			* model constraints
+			* How about some instances? See http://brewery.org/brewery/library/AlClbinger.html  !!
+			* Percentage as subclass of float?
+			
+	Hints		* model purity requirements (german purity law): barley/wheat (kindof grain): malt, hops, water (and yeast (yet unknown around 1516))
+			* For the preparation of beer, only malt, hops, yeast and water can be used.
+			* Typically, beers are made from water, malted barley, hops, fermented by yeast. The addition of other flavorings or sources of sugar is not uncommon.
+    """ ;
+                               
+                               owl:versionInfo "beer_v0.4.owl, based on http://purl.org/net/ontology/beer_v0.3.owl" .
+
+
+#################################################################
+#
+#    Annotation properties
+#
+#################################################################
+
+
+:source rdf:type owl:AnnotationProperty .
+
+
+
+:styleLetter rdf:type owl:AnnotationProperty .
+
+
+
+:styleNumber rdf:type owl:AnnotationProperty .
+
+
+
+
+
+#################################################################
+#
+#    Datatypes
+#
+#################################################################
+
+
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://microbrew.it/beer.owl#awardCategory
+
+:awardCategory rdf:type owl:ObjectProperty ;
+               
+               rdfs:domain :Award .
+
+
+
+###  http://microbrew.it/beer.owl#awarded
+
+:awarded rdf:type owl:ObjectProperty ;
+         
+         rdfs:range :Award ;
+         
+         rdfs:domain :BeerStyle .
+
+
+
+###  http://microbrew.it/beer.owl#awardedAt
+
+:awardedAt rdf:type owl:ObjectProperty ;
+           
+           rdfs:domain :Award ;
+           
+           rdfs:range :Festival .
+
+
+
+###  http://microbrew.it/beer.owl#brewedBy
+
+:brewedBy rdf:type owl:ObjectProperty ;
+          
+          rdfs:domain :BeerStyle ;
+          
+          rdfs:range :Brewery .
+
+
+
+###  http://microbrew.it/beer.owl#brews
+
+:brews rdf:type owl:ObjectProperty ;
+       
+       rdfs:range :BeerStyle ;
+       
+       rdfs:domain :Brewery ;
+       
+       owl:inverseOf :brewedBy .
+
+
+
+###  http://microbrew.it/beer.owl#locatedIn
+
+:locatedIn rdf:type owl:ObjectProperty ;
+           
+           rdfs:domain :Brewery ;
+           
+           rdfs:range :Region .
+
+
+
+###  http://microbrew.it/beer.owl#madeFrom
+
+:madeFrom rdf:type owl:ObjectProperty ;
+          
+          rdfs:domain :BeerStyle ;
+          
+          rdfs:range :Ingredient .
+
+
+
+###  http://microbrew.it/beer.owl#maltedTo
+
+:maltedTo rdf:type owl:ObjectProperty ;
+          
+          rdfs:domain :Grain ;
+          
+          rdfs:range :Malt .
+
+
+
+###  http://microbrew.it/beer.owl#producedBy
+
+:producedBy rdf:type owl:ObjectProperty .
+
+
+
+###  http://microbrew.it/beer.owl#produces
+
+:produces rdf:type owl:ObjectProperty ;
+          
+          owl:inverseOf :producedBy .
+
+
+
+###  http://microbrew.it/beer.owl#sells
+
+:sells rdf:type owl:ObjectProperty ;
+       
+       rdfs:range :BeerStyle ;
+       
+       rdfs:domain :Retailer .
+
+
+
+###  http://microbrew.it/beer.owl#soldBy
+
+:soldBy rdf:type owl:ObjectProperty ;
+        
+        rdfs:domain :BeerStyle ;
+        
+        rdfs:range :Retailer ;
+        
+        owl:inverseOf :sells ;
+        
+        rdfs:subPropertyOf owl:topObjectProperty .
+
+
+
+###  http://microbrew.it/beer.owl#sponsors
+
+:sponsors rdf:type owl:ObjectProperty ;
+          
+          rdfs:domain :Association ;
+          
+          rdfs:range :Festival .
+
+
+
+
+
+#################################################################
+#
+#    Data properties
+#
+#################################################################
+
+
+###  http://microbrew.it/beer.owl#hasAlcoholicContent
+
+:hasAlcoholicContent rdf:type owl:DatatypeProperty ,
+                              owl:FunctionalProperty ;
+                     
+                     rdfs:domain :BeerStyle ;
+                     
+                     rdfs:subPropertyOf :hasContent ;
+                     
+                     rdfs:range xsd:float .
+
+
+
+###  http://microbrew.it/beer.owl#hasBarCode
+
+:hasBarCode rdf:type owl:DatatypeProperty ;
+            
+            rdfs:domain :BeerStyle ;
+            
+            rdfs:subPropertyOf :hasContent .
+
+
+
+###  http://microbrew.it/beer.owl#hasContent
+
+:hasContent rdf:type owl:DatatypeProperty ;
+            
+            rdfs:comment "only for test purposes" ;
+            
+            rdfs:domain :BeerStyle .
+
+
+
+###  http://microbrew.it/beer.owl#hasEBC
+
+:hasEBC rdf:type owl:DatatypeProperty ;
+        
+        rdfs:range xsd:integer .
+
+
+
+###  http://microbrew.it/beer.owl#hasOriginalWortContent
+
+:hasOriginalWortContent rdf:type owl:DatatypeProperty ,
+                                 owl:FunctionalProperty ;
+                        
+                        rdfs:domain :BeerStyle ;
+                        
+                        rdfs:subPropertyOf :hasContent ;
+                        
+                        rdfs:range xsd:float .
+
+
+
+###  http://microbrew.it/beer.owl#hasSRM
+
+:hasSRM rdf:type owl:DatatypeProperty .
+
+
+
+###  http://www.w3.org/2001/vcard-rdf/3.0#latitude
+
+vcard:latitude rdf:type owl:DatatypeProperty .
+
+
+
+###  http://www.w3.org/2001/vcard-rdf/3.0#longitude
+
+vcard:longitude rdf:type owl:DatatypeProperty .
+
+
+
+###  http://www.w3.org/2001/vcard-rdf/3.0#region
+
+vcard:region rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain vcard:Address .
+
+
+
+###  http://xmlns.com/foaf/0.1/account
+
+foaf:account rdf:type owl:DatatypeProperty ;
+             
+             rdfs:domain :User .
+
+
+
+###  http://xmlns.com/foaf/0.1/accountName
+
+foaf:accountName rdf:type owl:DatatypeProperty ;
+                 
+                 rdfs:domain :User .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://microbrew.it/beer.owl#2_Row_Brewers
+
+<http://microbrew.it/beer.owl#2_Row_Brewers> rdf:type owl:Class ;
+                                             
+                                             rdfs:subClassOf :Briess .
+
+
+
+###  http://microbrew.it/beer.owl#2_Row_Carapils
+
+<http://microbrew.it/beer.owl#2_Row_Carapils> rdf:type owl:Class ;
+                                              
+                                              rdfs:subClassOf :Briess .
+
+
+
+###  http://microbrew.it/beer.owl#6_Row_Brewers
+
+<http://microbrew.it/beer.owl#6_Row_Brewers> rdf:type owl:Class ;
+                                             
+                                             rdfs:subClassOf :Briess .
+
+
+
+###  http://microbrew.it/beer.owl#AHA
+
+:AHA rdf:type owl:Class ;
+     
+     rdfs:label "American Brewers Association" ;
+     
+     rdfs:subClassOf :BeerStyle ;
+     
+     :source "http://www.brewersassociation.org/attachments/0001/1129/2013_BA_Beer_Style_Guidelines.pdf" ;
+     
+     rdfs:comment """The Brewers Association Beer Style Guidelines are compiled for the Brewers Association by Charlie Papazian, copyright 1993 through and including 2013, with Style Guideline Committee assistance and review by Paul Gatza, Chris Swersey and suggestions from Great American Beer Festival and World Beer Cup judges.
+""" .
+
+
+
+###  http://microbrew.it/beer.owl#Acid
+
+:Acid rdf:type owl:Class ;
+      
+      rdfs:subClassOf :Malt .
+
+
+
+###  http://microbrew.it/beer.owl#Adambier
+
+:Adambier rdf:type owl:Class ;
+          
+          rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Aged_Beer
+
+:Aged_Beer rdf:type owl:Class ;
+           
+           rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Ale
+
+:Ale rdf:type owl:Class ;
+     
+     rdfs:subClassOf :AHA .
+
+
+
+###  http://microbrew.it/beer.owl#Amber
+
+:Amber rdf:type owl:Class ;
+       
+       rdfs:subClassOf :Malt .
+
+
+
+###  http://microbrew.it/beer.owl#Amber_Hybrid_Beer
+
+:Amber_Hybrid_Beer rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#American_Ale
+
+:American_Ale rdf:type owl:Class ;
+              
+              rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#American_Amber_Ale
+
+:American_Amber_Ale rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf :American_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#American_Barleywine
+
+:American_Barleywine rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :Strong_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#American_Brown_Ale
+
+:American_Brown_Ale rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf :American_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#American_IPA
+
+:American_IPA rdf:type owl:Class ;
+              
+              rdfs:subClassOf :Indian_Pale_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#American_Pale_Ale
+
+:American_Pale_Ale rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :American_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#American_Srtyle_Cream_Ale
+
+:American_Srtyle_Cream_Ale rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#American_Stout
+
+:American_Stout rdf:type owl:Class ;
+                
+                rdfs:subClassOf :Stout .
+
+
+
+###  http://microbrew.it/beer.owl#American_Style_Amber_Lager
+
+:American_Style_Amber_Lager rdf:type owl:Class ;
+                            
+                            rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#American_Style_Amber_LagerAHA
+
+:American_Style_Amber_LagerAHA rdf:type owl:Class ;
+                               
+                               rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#American_Style_Dark_Lager
+
+:American_Style_Dark_Lager rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#American_Style_Ice_Lager
+
+:American_Style_Ice_Lager rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#American_Style_Lager
+
+:American_Style_Lager rdf:type owl:Class ;
+                      
+                      rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#American_Style_Light_and_Low_Carbohydrate_Lager
+
+:American_Style_Light_and_Low_Carbohydrate_Lager rdf:type owl:Class ;
+                                                 
+                                                 rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#American_Style_Malt_Liquor
+
+:American_Style_Malt_Liquor rdf:type owl:Class ;
+                            
+                            rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#American_Style_Märzen_Oktoberfest
+
+:American_Style_Märzen_Oktoberfest rdf:type owl:Class ;
+                                   
+                                   rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#American_Style_Pilsner
+
+:American_Style_Pilsner rdf:type owl:Class ;
+                        
+                        rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#American_Wheat_or_Rye_Beer
+
+:American_Wheat_or_Rye_Beer rdf:type owl:Class ;
+                            
+                            rdfs:subClassOf :Light_Hybrid_Beer .
+
+
+
+###  http://microbrew.it/beer.owl#Aromatic
+
+:Aromatic rdf:type owl:Class ;
+          
+          rdfs:subClassOf :Malt .
+
+
+
+###  http://microbrew.it/beer.owl#Association
+
+:Association rdf:type owl:Class ;
+             
+             rdfs:subClassOf :Organization .
+
+
+
+###  http://microbrew.it/beer.owl#Australasian_Latin_American_or_Tropical_Style_Light_Lager
+
+:Australasian_Latin_American_or_Tropical_Style_Light_Lager rdf:type owl:Class ;
+                                                           
+                                                           rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Australasian_Style_Pale_Ale
+
+:Australasian_Style_Pale_Ale rdf:type owl:Class ;
+                             
+                             rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Award
+
+:Award rdf:type owl:Class .
+
+
+
+###  http://microbrew.it/beer.owl#BJCP
+
+:BJCP rdf:type owl:Class ;
+      
+      rdfs:label "Beer Judge Certification Program" ;
+      
+      rdfs:subClassOf :BeerStyle ;
+      
+      rdfs:comment """The principal component of the BJCP is, of course, the general membership of over 2,500 judges at various ranks and levels of experience. The members are assigned to one of seven regions based on geography. Regions include all parts of the US and Canada. The relatively few members who live elsewhere in the world are arbitrarily assigned to the Northeast region.
+
+The members in each region elect a representative, by a simple majority of the vote, to represent the region and sit on the BJCP Board of Directors. The term of office is two years and they are staggered in time so that there is continuity on the board after each election.
+
+The members of the board elect, from among themselves, the constitutional offices of president, secretary and treasurer. The board also appoints non-voting directors to perform such duties as necessary to run BJCP's various activities.""" ;
+      
+      :source "http://www.brewersassociation.org/attachments/0001/1129/2013_BA_Beer_Style_Guidelines.pdf" .
+
+
+
+###  http://microbrew.it/beer.owl#Baltic_Porter
+
+:Baltic_Porter rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Porter .
+
+
+
+###  http://microbrew.it/beer.owl#Baltic_Style_Porter
+
+:Baltic_Style_Porter rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Bamberg_Style_Helles_Rauchbier
+
+:Bamberg_Style_Helles_Rauchbier rdf:type owl:Class ;
+                                
+                                rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Bamberg_Style_Märzen_Rauchbier
+
+:Bamberg_Style_Märzen_Rauchbier rdf:type owl:Class ;
+                                
+                                rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Bamberg_Style_Weiss_Rauchbier
+
+:Bamberg_Style_Weiss_Rauchbier rdf:type owl:Class ;
+                               
+                               rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Bamberg_Style__Bock_Rauchbier
+
+:Bamberg_Style__Bock_Rauchbier rdf:type owl:Class ;
+                               
+                               rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Barley
+
+:Barley rdf:type owl:Class ;
+        
+        rdfs:label "Gerste"@de ;
+        
+        rdfs:subClassOf :Grain .
+
+
+
+###  http://microbrew.it/beer.owl#Batch
+
+:Batch rdf:type owl:Class .
+
+
+
+###  http://microbrew.it/beer.owl#Beer
+
+:Beer rdf:type owl:Class .
+
+
+
+###  http://microbrew.it/beer.owl#BeerStyle
+
+:BeerStyle rdf:type owl:Class .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Blond_Ale
+
+:Belgian_Blond_Ale rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :Belgian_Strong_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Dark_Strong_Ale
+
+:Belgian_Dark_Strong_Ale rdf:type owl:Class ;
+                         
+                         rdfs:subClassOf :Belgian_Strong_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Dubbel
+
+:Belgian_Dubbel rdf:type owl:Class ;
+                
+                rdfs:subClassOf :Belgian_Strong_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Golden_Strong_Ale
+
+:Belgian_Golden_Strong_Ale rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf :Belgian_Strong_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Pale_Ale
+
+:Belgian_Pale_Ale rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :Belgian_and_French_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Specialty_Ale
+
+:Belgian_Specialty_Ale rdf:type owl:Class ;
+                       
+                       rdfs:subClassOf :Belgian_and_French_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Strong_Ale
+
+:Belgian_Strong_Ale rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Style_Blonde_Ale
+
+:Belgian_Style_Blonde_Ale rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Style_Dark_Strong_Ale
+
+:Belgian_Style_Dark_Strong_Ale rdf:type owl:Class ;
+                               
+                               rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Style_Dubbel
+
+:Belgian_Style_Dubbel rdf:type owl:Class ;
+                      
+                      rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Style_Flanders_Oud_Bruin_or_Oud_Red_Ales
+
+:Belgian_Style_Flanders_Oud_Bruin_or_Oud_Red_Ales rdf:type owl:Class ;
+                                                   
+                                                   rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Style_Fruit_Lambic
+
+:Belgian_Style_Fruit_Lambic rdf:type owl:Class ;
+                            
+                            rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Style_Gueuze_Lambic
+
+:Belgian_Style_Gueuze_Lambic rdf:type owl:Class ;
+                             
+                             rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Style_Lambic
+
+:Belgian_Style_Lambic rdf:type owl:Class ;
+                      
+                      rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Style_Pale_Ale
+
+:Belgian_Style_Pale_Ale rdf:type owl:Class ;
+                        
+                        rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Style_Pale_Strong_Ale
+
+:Belgian_Style_Pale_Strong_Ale rdf:type owl:Class ;
+                               
+                               rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Style_Quadrupel
+
+:Belgian_Style_Quadrupel rdf:type owl:Class ;
+                         
+                         rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Style_Table_Beer
+
+:Belgian_Style_Table_Beer rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Style_Tripel
+
+:Belgian_Style_Tripel rdf:type owl:Class ;
+                      
+                      rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Style_White_or_Wit_or_Wheat
+
+:Belgian_Style_White_or_Wit_or_Wheat rdf:type owl:Class ;
+                                     
+                                     rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_Tripel
+
+:Belgian_Tripel rdf:type owl:Class ;
+                
+                rdfs:subClassOf :Belgian_Strong_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Belgian_and_French_Ale
+
+:Belgian_and_French_Ale rdf:type owl:Class ;
+                        
+                        rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Berliner_Style_Weisse
+
+:Berliner_Style_Weisse rdf:type owl:Class ;
+                       
+                       rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Berliner_Weisse
+
+:Berliner_Weisse rdf:type owl:Class ;
+                 
+                 rdfs:subClassOf :Sour_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Biere_de_Garde
+
+:Biere_de_Garde rdf:type owl:Class ;
+                
+                rdfs:subClassOf :Belgian_and_French_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Biscuit
+
+:Biscuit rdf:type owl:Class ;
+         
+         rdfs:subClassOf :Malt .
+
+
+
+###  http://microbrew.it/beer.owl#Black
+
+:Black rdf:type owl:Class ;
+       
+       rdfs:subClassOf :Malt .
+
+
+
+###  http://microbrew.it/beer.owl#Black_Barley
+
+:Black_Barley rdf:type owl:Class ;
+              
+              rdfs:subClassOf :Barley .
+
+
+
+###  http://microbrew.it/beer.owl#Blonde_Ale
+
+:Blonde_Ale rdf:type owl:Class ;
+            
+            rdfs:subClassOf :Light_Hybrid_Beer .
+
+
+
+###  http://microbrew.it/beer.owl#Bock
+
+:Bock rdf:type owl:Class ;
+      
+      rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Bohemian_Pilsner
+
+:Bohemian_Pilsner rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :Pilsner .
+
+
+
+###  http://microbrew.it/beer.owl#Bohemian_Style_Pilsener
+
+:Bohemian_Style_Pilsener rdf:type owl:Class ;
+                         
+                         rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Brewery
+
+:Brewery rdf:type owl:Class ;
+         
+         rdfs:subClassOf :Organization .
+
+
+
+###  http://microbrew.it/beer.owl#Briess
+
+:Briess rdf:type owl:Class ;
+        
+        rdfs:subClassOf :Malt .
+
+
+
+###  http://microbrew.it/beer.owl#British_Style_Barley_Wine_Ale
+
+:British_Style_Barley_Wine_Ale rdf:type owl:Class ;
+                               
+                               rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#British_Style_Imperial_Stout
+
+:British_Style_Imperial_Stout rdf:type owl:Class ;
+                              
+                              rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Brown_Porter
+
+:Brown_Porter rdf:type owl:Class ;
+              
+              rdfs:subClassOf :Porter .
+
+
+
+###  http://microbrew.it/beer.owl#Brown_PorterAHA
+
+:Brown_PorterAHA rdf:type owl:Class ;
+                 
+                 rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#California_Common_Beer
+
+:California_Common_Beer rdf:type owl:Class ;
+                        
+                        rdfs:subClassOf :Amber_Hybrid_Beer .
+
+
+
+###  http://microbrew.it/beer.owl#California_Common_BeerAHA
+
+:California_Common_BeerAHA rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Caramel
+
+:Caramel rdf:type owl:Class ;
+         
+         rdfs:subClassOf :Malt .
+
+
+
+###  http://microbrew.it/beer.owl#Carapils
+
+:Carapils rdf:type owl:Class ;
+          
+          rdfs:subClassOf :Malt .
+
+
+
+###  http://microbrew.it/beer.owl#Cascade
+
+:Cascade rdf:type owl:Class ;
+         
+         rdfs:subClassOf :Hops .
+
+
+
+###  http://microbrew.it/beer.owl#Chinook
+
+:Chinook rdf:type owl:Class ;
+         
+         rdfs:subClassOf :Hops .
+
+
+
+###  http://microbrew.it/beer.owl#Chocolate
+
+:Chocolate rdf:type owl:Class ;
+           
+           rdfs:subClassOf :Malt .
+
+
+
+###  http://microbrew.it/beer.owl#Christmas_Winter_Specialty_Spiced_Beer
+
+:Christmas_Winter_Specialty_Spiced_Beer rdf:type owl:Class ;
+                                        
+                                        rdfs:subClassOf :Spice_Herb_Vegetable_Beer .
+
+
+
+###  http://microbrew.it/beer.owl#Classic_American_Pilsner
+
+:Classic_American_Pilsner rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :Pilsner .
+
+
+
+###  http://microbrew.it/beer.owl#Classic_English_Style_Pale_Ale
+
+:Classic_English_Style_Pale_Ale rdf:type owl:Class ;
+                                
+                                rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Classic_Irish_Style_Dry_Stout
+
+:Classic_Irish_Style_Dry_Stout rdf:type owl:Class ;
+                               
+                               rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Coffee_Flavored_Beer
+
+:Coffee_Flavored_Beer rdf:type owl:Class ;
+                      
+                      rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Cream_Ale
+
+:Cream_Ale rdf:type owl:Class ;
+           
+           rdfs:subClassOf :Light_Hybrid_Beer .
+
+
+
+###  http://microbrew.it/beer.owl#Dark_American_Lager
+
+:Dark_American_Lager rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :Dark_Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Dark_American_Wheat_Ale_or_Lager_without_Yeast
+
+:Dark_American_Wheat_Ale_or_Lager_without_Yeast rdf:type owl:Class ;
+                                                
+                                                rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Dark_American_Wheat_or_Lager_with_Yeast
+
+:Dark_American_Wheat_or_Lager_with_Yeast rdf:type owl:Class ;
+                                         
+                                         rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Dark_Lager
+
+:Dark_Lager rdf:type owl:Class ;
+            
+            rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Doppelbock
+
+:Doppelbock rdf:type owl:Class ;
+            
+            rdfs:subClassOf :Bock .
+
+
+
+###  http://microbrew.it/beer.owl#Dortmunder_European_Style_Export
+
+:Dortmunder_European_Style_Export rdf:type owl:Class ;
+                                  
+                                  rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Dortmunder_Export
+
+:Dortmunder_Export rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :Light_Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Dry
+
+:Dry rdf:type owl:Class ;
+     
+     rdfs:subClassOf :Yeast .
+
+
+
+###  http://microbrew.it/beer.owl#DryExtract
+
+:DryExtract rdf:type owl:Class ;
+            
+            rdfs:subClassOf :Extract .
+
+
+
+###  http://microbrew.it/beer.owl#Dry_Stout
+
+:Dry_Stout rdf:type owl:Class ;
+           
+           rdfs:subClassOf :Stout .
+
+
+
+###  http://microbrew.it/beer.owl#Dunkelweizen
+
+:Dunkelweizen rdf:type owl:Class ;
+              
+              rdfs:subClassOf :German_Wheat_and_Rye_Beer .
+
+
+
+###  http://microbrew.it/beer.owl#Düsseldorf_Altbier
+
+:Düsseldorf_Altbier rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf :Amber_Hybrid_Beer .
+
+
+
+###  http://microbrew.it/beer.owl#Eisbock
+
+:Eisbock rdf:type owl:Class ;
+         
+         rdfs:subClassOf :Bock .
+
+
+
+###  http://microbrew.it/beer.owl#English_Barleywine
+
+:English_Barleywine rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf :Strong_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#English_Brown_Ale
+
+:English_Brown_Ale rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#English_IPA
+
+:English_IPA rdf:type owl:Class ;
+             
+             rdfs:subClassOf :Indian_Pale_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#English_Pale_Ale
+
+:English_Pale_Ale rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#English_Style_Brown_Ale
+
+:English_Style_Brown_Ale rdf:type owl:Class ;
+                         
+                         rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#English_Style_Dark_Mild_Ale
+
+:English_Style_Dark_Mild_Ale rdf:type owl:Class ;
+                             
+                             rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#English_Style_India_Pale_Ale
+
+:English_Style_India_Pale_Ale rdf:type owl:Class ;
+                              
+                              rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#English_Style_Pale_Mild_Ale
+
+:English_Style_Pale_Mild_Ale rdf:type owl:Class ;
+                             
+                             rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#English_Style_Summer_Ale
+
+:English_Style_Summer_Ale rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#European_Amber_Lager
+
+:European_Amber_Lager rdf:type owl:Class ;
+                      
+                      rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#European_Low-Alcohol_Lager_German_Leicht
+
+:European_Low-Alcohol_Lager_German_Leicht rdf:type owl:Class ;
+                                          
+                                          rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#European_Style_Dark_Münchner_Dunkel
+
+:European_Style_Dark_Münchner_Dunkel rdf:type owl:Class ;
+                                     
+                                     rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Exerimental_Beer
+
+:Exerimental_Beer rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Extra_Special_Bitter
+
+:Extra_Special_Bitter rdf:type owl:Class ;
+                      
+                      rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Extra_Special_Strong_Bitter
+
+:Extra_Special_Strong_Bitter rdf:type owl:Class ;
+                             
+                             rdfs:subClassOf :English_Pale_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Extract
+
+:Extract rdf:type owl:Class ;
+         
+         rdfs:subClassOf :Ingredient .
+
+
+
+###  http://microbrew.it/beer.owl#Festival
+
+:Festival rdf:type owl:Class .
+
+
+
+###  http://microbrew.it/beer.owl#Field_Beer
+
+:Field_Beer rdf:type owl:Class ;
+            
+            rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Flaked
+
+:Flaked rdf:type owl:Class ;
+        
+        rdfs:subClassOf :Barley .
+
+
+
+###  http://microbrew.it/beer.owl#Flander_Brown_Ale
+
+:Flander_Brown_Ale rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :Sour_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Flanders_Red_Ale
+
+:Flanders_Red_Ale rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :Sour_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Foreign_Extra_Stout
+
+:Foreign_Extra_Stout rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :Stout .
+
+
+
+###  http://microbrew.it/beer.owl#Foreign_Style_Stout
+
+:Foreign_Style_Stout rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#French_&_Belgian_Style_Saison
+
+<http://microbrew.it/beer.owl#French_&_Belgian_Style_Saison> rdf:type owl:Class ;
+                                                             
+                                                             rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#French_Style_Bière_de_Garde
+
+:French_Style_Bière_de_Garde rdf:type owl:Class ;
+                             
+                             rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Fruit_Beer
+
+:Fruit_Beer rdf:type owl:Class ;
+            
+            rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Fruit_BeerAHA
+
+:Fruit_BeerAHA rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Fruit_Lambic
+
+:Fruit_Lambic rdf:type owl:Class ;
+              
+              rdfs:subClassOf :Sour_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Fruit_Wheat_Ale_or_Lager
+
+:Fruit_Wheat_Ale_or_Lager rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Galena
+
+:Galena rdf:type owl:Class ;
+        
+        rdfs:subClassOf :Hops .
+
+
+
+###  http://microbrew.it/beer.owl#German_Pilsner
+
+:German_Pilsner rdf:type owl:Class ;
+                
+                rdfs:subClassOf :Pilsner .
+
+
+
+###  http://microbrew.it/beer.owl#German_Style_Brown_Ale_Düsseldorf-Style_Altbier
+
+:German_Style_Brown_Ale_Düsseldorf-Style_Altbier rdf:type owl:Class ;
+                                                 
+                                                 rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#German_Style_Doppelbock
+
+:German_Style_Doppelbock rdf:type owl:Class ;
+                         
+                         rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#German_Style_Heller_Bock_Maibock
+
+:German_Style_Heller_Bock_Maibock rdf:type owl:Class ;
+                                  
+                                  rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#German_Style_Kölsch_Köln_Style_Kölsch
+
+:German_Style_Kölsch_Köln_Style_Kölsch rdf:type owl:Class ;
+                                       
+                                       rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#German_Style_Leichtes_Weizen_Weissbier
+
+:German_Style_Leichtes_Weizen_Weissbier rdf:type owl:Class ;
+                                        
+                                        rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#German_Style_Märzen
+
+:German_Style_Märzen rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#German_Style_Oktoberfest_Wiesn
+
+:German_Style_Oktoberfest_Wiesn rdf:type owl:Class ;
+                                
+                                rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#German_Style_Pilsener
+
+:German_Style_Pilsener rdf:type owl:Class ;
+                       
+                       rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#German_Style_Rye_Ale
+
+:German_Style_Rye_Ale rdf:type owl:Class ;
+                      
+                      rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#German_Style_Schwarzbier
+
+:German_Style_Schwarzbier rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#German_Wheat_and_Rye_Beer
+
+:German_Wheat_and_Rye_Beer rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#German_style_Eisbock
+
+:German_style_Eisbock rdf:type owl:Class ;
+                      
+                      rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Gluten_Free_Beer
+
+:Gluten_Free_Beer rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Grain
+
+:Grain rdf:type owl:Class ;
+       
+       rdfs:label "Getreide"@de ;
+       
+       rdfs:subClassOf :Ingredient .
+
+
+
+###  http://microbrew.it/beer.owl#Grodzisz
+
+:Grodzisz rdf:type owl:Class ;
+          
+          rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Gueuze
+
+:Gueuze rdf:type owl:Class ;
+        
+        rdfs:subClassOf :Sour_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Hallertau
+
+:Hallertau rdf:type owl:Class ;
+           
+           rdfs:subClassOf :Hops .
+
+
+
+###  http://microbrew.it/beer.owl#Herb_and_Spice_Beer
+
+:Herb_and_Spice_Beer rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Hops
+
+:Hops rdf:type owl:Class ;
+      
+      rdfs:label "Hopfen"@de ,
+                 "Hops"@en ,
+                 "Vine"@en ;
+      
+      rdfs:subClassOf :Ingredient .
+
+
+
+###  http://microbrew.it/beer.owl#Hulls
+
+:Hulls rdf:type owl:Class ;
+       
+       rdfs:subClassOf :Barley .
+
+
+
+###  http://microbrew.it/beer.owl#Hybrid_Mixed
+
+:Hybrid_Mixed rdf:type owl:Class ;
+              
+              rdfs:subClassOf :AHA .
+
+
+
+###  http://microbrew.it/beer.owl#Imperial_IPA
+
+:Imperial_IPA rdf:type owl:Class ;
+              
+              rdfs:subClassOf :Indian_Pale_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Indian_Pale_Ale
+
+:Indian_Pale_Ale rdf:type owl:Class ;
+                 
+                 rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Indigenous_Beer
+
+:Indigenous_Beer rdf:type owl:Class ;
+                 
+                 rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Ingredient
+
+:Ingredient rdf:type owl:Class .
+
+
+
+###  http://microbrew.it/beer.owl#International_Style_Pale_Ale
+
+:International_Style_Pale_Ale rdf:type owl:Class ;
+                              
+                              rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#International_Style_Pilsner
+
+:International_Style_Pilsner rdf:type owl:Class ;
+                             
+                             rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Irish_Red_Ale
+
+:Irish_Red_Ale rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Scottish_and_Irish_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Irish_Style_Red_Ale
+
+:Irish_Style_Red_Ale rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Japanese_Sake_Yeast_Beer
+
+:Japanese_Sake_Yeast_Beer rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Kellerbier_or_Cellar_beer_or_Zwickelbier
+
+:Kellerbier_or_Cellar_beer_or_Zwickelbier rdf:type owl:Class ;
+                                          
+                                          rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Kellerbier_or_Zwickelbier
+
+:Kellerbier_or_Zwickelbier rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#KentGoldings
+
+:KentGoldings rdf:type owl:Class ;
+              
+              rdfs:subClassOf :Hops .
+
+
+
+###  http://microbrew.it/beer.owl#Kölsch
+
+:Kölsch rdf:type owl:Class ;
+        
+        rdfs:subClassOf :Light_Hybrid_Beer .
+
+
+
+###  http://microbrew.it/beer.owl#Lager
+
+:Lager rdf:type owl:Class ;
+       
+       rdfs:subClassOf :AHA .
+
+
+
+###  http://microbrew.it/beer.owl#Leipzig_Style_Gose
+
+:Leipzig_Style_Gose rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Light_American_Ale_or_Lager_with_Yeast
+
+:Light_American_Ale_or_Lager_with_Yeast rdf:type owl:Class ;
+                                        
+                                        rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Light_American_Ale_or_Lager_without_Yeast
+
+:Light_American_Ale_or_Lager_without_Yeast rdf:type owl:Class ;
+                                           
+                                           rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Light_Hybrid_Beer
+
+:Light_Hybrid_Beer rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Light_Lager
+
+:Light_Lager rdf:type owl:Class ;
+             
+             rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Liquid
+
+:Liquid rdf:type owl:Class ;
+        
+        rdfs:subClassOf :Yeast .
+
+
+
+###  http://microbrew.it/beer.owl#LiquidExtract
+
+:LiquidExtract rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Extract .
+
+
+
+###  http://microbrew.it/beer.owl#Lite_American_Lager
+
+:Lite_American_Lager rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :Light_Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Maibock_Helles_Bock
+
+:Maibock_Helles_Bock rdf:type owl:Class ;
+                     
+                     rdfs:subClassOf :Bock .
+
+
+
+###  http://microbrew.it/beer.owl#Malt
+
+:Malt rdf:type owl:Class ;
+      
+      rdfs:label "Malz"@de ;
+      
+      rdfs:subClassOf :Ingredient .
+
+
+
+###  http://microbrew.it/beer.owl#Microbrewery
+
+:Microbrewery rdf:type owl:Class ;
+              
+              rdfs:subClassOf :Brewery .
+
+
+
+###  http://microbrew.it/beer.owl#Mild
+
+:Mild rdf:type owl:Class ;
+      
+      rdfs:subClassOf :English_Brown_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#MountHood
+
+:MountHood rdf:type owl:Class ;
+           
+           rdfs:subClassOf :Hops .
+
+
+
+###  http://microbrew.it/beer.owl#Munich
+
+:Munich rdf:type owl:Class ;
+        
+        rdfs:subClassOf :Malt .
+
+
+
+###  http://microbrew.it/beer.owl#Munich_Dunkel
+
+:Munich_Dunkel rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Dark_Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Munich_Helles
+
+:Munich_Helles rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Light_Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Münchner_Style_Helles
+
+:Münchner_Style_Helles rdf:type owl:Class ;
+                       
+                       rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Non-Alcoholic_Malt_Beverages
+
+:Non-Alcoholic_Malt_Beverages rdf:type owl:Class ;
+                              
+                              rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Northern_English_Brown_Ale
+
+:Northern_English_Brown_Ale rdf:type owl:Class ;
+                            
+                            rdfs:subClassOf :English_Brown_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Northern_German_Altbier
+
+:Northern_German_Altbier rdf:type owl:Class ;
+                         
+                         rdfs:subClassOf :Amber_Hybrid_Beer .
+
+
+
+###  http://microbrew.it/beer.owl#Oatmeal_Stout
+
+:Oatmeal_Stout rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Stout .
+
+
+
+###  http://microbrew.it/beer.owl#Oatmeal_StoutAHA
+
+:Oatmeal_StoutAHA rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Oktoberfest_Märzen
+
+:Oktoberfest_Märzen rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf :European_Amber_Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Old_Ale
+
+:Old_Ale rdf:type owl:Class ;
+         
+         rdfs:subClassOf :Strong_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Old_AleAHA
+
+:Old_AleAHA rdf:type owl:Class ;
+            
+            rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Ordinary_Bitter
+
+:Ordinary_Bitter rdf:type owl:Class ;
+                 
+                 rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Organization
+
+:Organization rdf:type owl:Class .
+
+
+
+###  http://microbrew.it/beer.owl#Other
+
+:Other rdf:type owl:Class ;
+       
+       rdfs:subClassOf :Ingredient .
+
+
+
+###  http://microbrew.it/beer.owl#Other_Belgian_Style_Ales
+
+:Other_Belgian_Style_Ales rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Other_Strong_Ale_or_Lager
+
+:Other_Strong_Ale_or_Lager rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Pale
+
+:Pale rdf:type owl:Class ;
+      
+      rdfs:subClassOf :Malt .
+
+
+
+###  http://microbrew.it/beer.owl#Perle
+
+:Perle rdf:type owl:Class ;
+       
+       rdfs:subClassOf :Hops .
+
+
+
+###  http://microbrew.it/beer.owl#Pilsner
+
+:Pilsner rdf:type owl:Class ;
+         
+         rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Porter
+
+:Porter rdf:type owl:Class ;
+        
+        rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#PorterAHA
+
+:PorterAHA rdf:type owl:Class ;
+           
+           rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Premium_American_Lager
+
+:Premium_American_Lager rdf:type owl:Class ;
+                        
+                        rdfs:subClassOf :Light_Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Pumpkin_Beer
+
+:Pumpkin_Beer rdf:type owl:Class ;
+              
+              rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Raw
+
+:Raw rdf:type owl:Class ;
+     
+     rdfs:subClassOf :Barley .
+
+
+
+###  http://microbrew.it/beer.owl#Recipe
+
+:Recipe rdf:type owl:Class .
+
+
+
+###  http://microbrew.it/beer.owl#Region
+
+:Region rdf:type owl:Class .
+
+
+
+###  http://microbrew.it/beer.owl#Retailer
+
+:Retailer rdf:type owl:Class ;
+          
+          rdfs:subClassOf :Organization .
+
+
+
+###  http://microbrew.it/beer.owl#Rice
+
+:Rice rdf:type owl:Class ;
+      
+      rdfs:subClassOf :Grain .
+
+
+
+###  http://microbrew.it/beer.owl#Robust_Porter
+
+:Robust_Porter rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Porter .
+
+
+
+###  http://microbrew.it/beer.owl#Robust_PorterAHA
+
+:Robust_PorterAHA rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Roggenbier
+
+:Roggenbier rdf:type owl:Class ;
+            
+            rdfs:subClassOf :German_Wheat_and_Rye_Beer .
+
+
+
+###  http://microbrew.it/beer.owl#Russian_Imperial_Stout
+
+:Russian_Imperial_Stout rdf:type owl:Class ;
+                        
+                        rdfs:subClassOf :Stout .
+
+
+
+###  http://microbrew.it/beer.owl#Rye
+
+:Rye rdf:type owl:Class ;
+     
+     rdfs:subClassOf :Grain .
+
+
+
+###  http://microbrew.it/beer.owl#Rye_Ale_or_Lager
+
+:Rye_Ale_or_Lager rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Saaz
+
+:Saaz rdf:type owl:Class ;
+      
+      rdfs:subClassOf :Hops .
+
+
+
+###  http://microbrew.it/beer.owl#Sasion
+
+:Sasion rdf:type owl:Class ;
+        
+        rdfs:subClassOf :Belgian_and_French_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Schwarzbier
+
+:Schwarzbier rdf:type owl:Class ;
+             
+             rdfs:subClassOf :Dark_Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Scotch_Ale
+
+:Scotch_Ale rdf:type owl:Class ;
+            
+            rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Scottish_Export_80
+
+:Scottish_Export_80 rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf :Scottish_and_Irish_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Scottish_Heavy_70
+
+:Scottish_Heavy_70 rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :Scottish_and_Irish_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Scottish_Light_60
+
+:Scottish_Light_60 rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :Scottish_and_Irish_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Scottish_Style_Export_Ale
+
+:Scottish_Style_Export_Ale rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Scottish_Style_Heavy_Ale
+
+:Scottish_Style_Heavy_Ale rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Scottish_Style_Light_Ale
+
+:Scottish_Style_Light_Ale rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Scottish_and_Irish_Ale
+
+:Scottish_and_Irish_Ale rdf:type owl:Class ;
+                        
+                        rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Session_Beer
+
+:Session_Beer rdf:type owl:Class ;
+              
+              rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Smoke_Beer
+
+:Smoke_Beer rdf:type owl:Class ;
+            
+            rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Sour_Ale
+
+:Sour_Ale rdf:type owl:Class ;
+          
+          rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#South_German_Style_Bernsteinfarbenes_Weizen_Weissbier
+
+:South_German_Style_Bernsteinfarbenes_Weizen_Weissbier rdf:type owl:Class ;
+                                                       
+                                                       rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#South_German_Style_Dunkel_Weizen_Dunkel_Weissbier
+
+:South_German_Style_Dunkel_Weizen_Dunkel_Weissbier rdf:type owl:Class ;
+                                                   
+                                                   rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#South_German_Style_Hefeweizen_Hefeweissbier
+
+:South_German_Style_Hefeweizen_Hefeweissbier rdf:type owl:Class ;
+                                             
+                                             rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#South_German_Style_Kristal_Weizen_Kristal_Weissbier
+
+:South_German_Style_Kristal_Weizen_Kristal_Weissbier rdf:type owl:Class ;
+                                                     
+                                                     rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#South_German_Style_Weizenbock_Weissbock
+
+:South_German_Style_Weizenbock_Weissbock rdf:type owl:Class ;
+                                         
+                                         rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Southern_English_Brown
+
+:Southern_English_Brown rdf:type owl:Class ;
+                        
+                        rdfs:subClassOf :English_Brown_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Special_Best_Premium_Bitter
+
+:Special_Best_Premium_Bitter rdf:type owl:Class ;
+                             
+                             rdfs:subClassOf :English_Pale_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Special_Bitter_or_Best_Bitter
+
+:Special_Bitter_or_Best_Bitter rdf:type owl:Class ;
+                               
+                               rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Speciality_Beer
+
+:Speciality_Beer rdf:type owl:Class ;
+                 
+                 rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Specialty_Honey_Lager_or_Ale
+
+:Specialty_Honey_Lager_or_Ale rdf:type owl:Class ;
+                              
+                              rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Specialy_Beer
+
+:Specialy_Beer rdf:type owl:Class ;
+               
+               rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Spice_Herb_Vegetable_Beer
+
+:Spice_Herb_Vegetable_Beer rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Spice_Herb_or_Vegetable_Beer
+
+:Spice_Herb_or_Vegetable_Beer rdf:type owl:Class ;
+                              
+                              rdfs:subClassOf :Spice_Herb_Vegetable_Beer .
+
+
+
+###  http://microbrew.it/beer.owl#Standard_American_Lager
+
+:Standard_American_Lager rdf:type owl:Class ;
+                         
+                         rdfs:subClassOf :Light_Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Standard_Ordinary_Bitter
+
+:Standard_Ordinary_Bitter rdf:type owl:Class ;
+                          
+                          rdfs:subClassOf :English_Pale_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Stout
+
+:Stout rdf:type owl:Class ;
+       
+       rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Straight_Lambic
+
+:Straight_Lambic rdf:type owl:Class ;
+                 
+                 rdfs:subClassOf :Sour_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Strong_Ale
+
+:Strong_Ale rdf:type owl:Class ;
+            
+            rdfs:subClassOf :BJCP .
+
+
+
+###  http://microbrew.it/beer.owl#Strong_AleAHA
+
+:Strong_AleAHA rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Strong_Scotch_Ale
+
+:Strong_Scotch_Ale rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :Scottish_and_Irish_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Sugar
+
+:Sugar rdf:type owl:Class ;
+       
+       rdfs:subClassOf :Ingredient .
+
+
+
+###  http://microbrew.it/beer.owl#Supplier
+
+:Supplier rdf:type owl:Class ;
+          
+          rdfs:subClassOf :Organization .
+
+
+
+###  http://microbrew.it/beer.owl#Sweet_Stout
+
+:Sweet_Stout rdf:type owl:Class ;
+             
+             rdfs:subClassOf :Stout .
+
+
+
+###  http://microbrew.it/beer.owl#Sweet_Stout_or_Cream_Stout
+
+:Sweet_Stout_or_Cream_Stout rdf:type owl:Class ;
+                            
+                            rdfs:subClassOf :Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Tettnang
+
+:Tettnang rdf:type owl:Class ;
+          
+          rdfs:subClassOf :Hops .
+
+
+
+###  http://microbrew.it/beer.owl#Torrefied
+
+:Torrefied rdf:type owl:Class ;
+           
+           rdfs:subClassOf :Barley .
+
+
+
+###  http://microbrew.it/beer.owl#Town
+
+:Town rdf:type owl:Class ;
+      
+      rdfs:subClassOf :Region .
+
+
+
+###  http://microbrew.it/beer.owl#Traditional_Bock
+
+:Traditional_Bock rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :Bock .
+
+
+
+###  http://microbrew.it/beer.owl#Traditional_German_Style_Bock
+
+:Traditional_German_Style_Bock rdf:type owl:Class ;
+                               
+                               rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#User
+
+:User rdf:type owl:Class .
+
+
+
+###  http://microbrew.it/beer.owl#Vienna_Lager
+
+:Vienna_Lager rdf:type owl:Class ;
+              
+              rdfs:subClassOf :European_Amber_Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Vienna_Style_Lager
+
+:Vienna_Style_Lager rdf:type owl:Class ;
+                    
+                    rdfs:subClassOf :Lager .
+
+
+
+###  http://microbrew.it/beer.owl#Water
+
+:Water rdf:type owl:Class ;
+       
+       rdfs:subClassOf :Ingredient .
+
+
+
+###  http://microbrew.it/beer.owl#Weizen_Weissbier
+
+:Weizen_Weissbier rdf:type owl:Class ;
+                  
+                  rdfs:subClassOf :German_Wheat_and_Rye_Beer .
+
+
+
+###  http://microbrew.it/beer.owl#Weizenbock
+
+:Weizenbock rdf:type owl:Class ;
+            
+            rdfs:subClassOf :German_Wheat_and_Rye_Beer .
+
+
+
+###  http://microbrew.it/beer.owl#Wheat
+
+:Wheat rdf:type owl:Class ;
+       
+       rdfs:label "Weizen"@de ;
+       
+       rdfs:subClassOf :Grain .
+
+
+
+###  http://microbrew.it/beer.owl#Willamette
+
+:Willamette rdf:type owl:Class ;
+            
+            rdfs:subClassOf :Hops .
+
+
+
+###  http://microbrew.it/beer.owl#Witbier
+
+:Witbier rdf:type owl:Class ;
+         
+         rdfs:subClassOf :Belgian_and_French_Ale .
+
+
+
+###  http://microbrew.it/beer.owl#Wood_and_Barrel_Aged_Beer
+
+:Wood_and_Barrel_Aged_Beer rdf:type owl:Class ;
+                           
+                           rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Wood_and_Barrel_Aged_Dark_Beer
+
+:Wood_and_Barrel_Aged_Dark_Beer rdf:type owl:Class ;
+                                
+                                rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Wood_and_Barrel_Aged_Pale_or_Amber_Beer
+
+:Wood_and_Barrel_Aged_Pale_or_Amber_Beer rdf:type owl:Class ;
+                                         
+                                         rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Wood_and_Barrel_Aged_Sour_Beer
+
+:Wood_and_Barrel_Aged_Sour_Beer rdf:type owl:Class ;
+                                
+                                rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Wood_and_Barrel_Aged_Strong_Beer
+
+:Wood_and_Barrel_Aged_Strong_Beer rdf:type owl:Class ;
+                                  
+                                  rdfs:subClassOf :Hybrid_Mixed .
+
+
+
+###  http://microbrew.it/beer.owl#Yeast
+
+:Yeast rdf:type owl:Class ;
+       
+       rdfs:label "Hefe"@de ;
+       
+       rdfs:subClassOf :Ingredient .
+
+
+
+###  http://www.w3.org/2001/vcard-rdf/3.0#Address
+
+vcard:Address rdf:type owl:Class .
+
+
+
+
+
+#################################################################
+#
+#    Individuals
+#
+#################################################################
+
+
+###  http://microbrew.it/beer.owl#Boddingtons
+
+:Boddingtons rdf:type owl:NamedIndividual .
+
+
+
+###  http://microbrew.it/beer.owl#Grafentrunk
+
+:Grafentrunk rdf:type :Beer ,
+                      owl:NamedIndividual .
+
+
+
+###  http://microbrew.it/beer.owl#Hoegaarden
+
+:Hoegaarden rdf:type owl:NamedIndividual .
+
+
+
+###  http://microbrew.it/beer.owl#Jever
+
+:Jever rdf:type owl:NamedIndividual .
+
+
+
+###  http://microbrew.it/beer.owl#Knut
+
+:Knut rdf:type :User ,
+               owl:NamedIndividual ;
+      
+      foaf:accountName "knutern69" .
+
+
+
+###  http://microbrew.it/beer.owl#Krieger
+
+:Krieger rdf:type owl:NamedIndividual ;
+         
+         rdfs:label "Krieger Hell"@de ;
+         
+         :hasAlcoholicContent "4.5" ;
+         
+         :brewedBy :KriegerBrauerei .
+
+
+
+###  http://microbrew.it/beer.owl#KriegerBrauerei
+
+:KriegerBrauerei rdf:type :Brewery ,
+                          owl:NamedIndividual ;
+                 
+                 :locatedIn :LandauIsar .
+
+
+
+###  http://microbrew.it/beer.owl#LandauIsar
+
+:LandauIsar rdf:type :Town ,
+                     owl:NamedIndividual ;
+            
+            rdfs:comment "Landau an der Isar, Germany" .
+
+
+
+###  http://microbrew.it/beer.owl#Maris_Otter_Pale_Ale_Malt
+
+:Maris_Otter_Pale_Ale_Malt rdf:type :Pale ,
+                                    owl:NamedIndividual ;
+                           
+                           :producedBy :Thomas_Fawcett ;
+                           
+                           :soldBy :Vestbrygg .
+
+
+
+###  http://microbrew.it/beer.owl#Meny
+
+:Meny rdf:type :Retailer ,
+               owl:NamedIndividual .
+
+
+
+###  http://microbrew.it/beer.owl#Paulaner
+
+:Paulaner rdf:type owl:NamedIndividual ;
+          
+          :soldBy :Vinmonopolet .
+
+
+
+###  http://microbrew.it/beer.owl#Tetleys
+
+:Tetleys rdf:type owl:NamedIndividual .
+
+
+
+###  http://microbrew.it/beer.owl#Thomas_Fawcett
+
+:Thomas_Fawcett rdf:type :Supplier ,
+                         owl:NamedIndividual ;
+                
+                :produces :Maris_Otter_Pale_Ale_Malt .
+
+
+
+###  http://microbrew.it/beer.owl#Vestbrygg
+
+:Vestbrygg rdf:type :Retailer ,
+                    owl:NamedIndividual ;
+           
+           :sells :Maris_Otter_Pale_Ale_Malt .
+
+
+
+###  http://microbrew.it/beer.owl#Vinmonopolet
+
+:Vinmonopolet rdf:type :Retailer ,
+                       owl:NamedIndividual .
+
+
+
+
+###  Generated by the OWL API (version 3.3.1957) http://owlapi.sourceforge.net
+
