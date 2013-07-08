@@ -1,0 +1,3333 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY rss "http://purl.org/rss/1.0/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY mb "http://microbrew.it/beer.owl#" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY gn "http://www.geonames.org/ontology#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY jms "http://jena.hpl.hp.com/2003/08/jms#" >
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY vcard "http://www.w3.org/2001/vcard-rdf/3.0#" >
+    <!ENTITY daml "http://www.daml.org/2001/03/daml+oil#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY wgs84_pos "http://www.w3.org/2003/01/geo/wgs84_pos#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://microbrew.it/beer.owl#"
+     xml:base="http://microbrew.it/beer.owl"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:wgs84_pos="http://www.w3.org/2003/01/geo/wgs84_pos#"
+     xmlns:foaf="http://xmlns.com/foaf/0.1/"
+     xmlns:jms="http://jena.hpl.hp.com/2003/08/jms#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:daml="http://www.daml.org/2001/03/daml+oil#"
+     xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#"
+     xmlns:gn="http://www.geonames.org/ontology#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:mb="http://microbrew.it/beer.owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:rss="http://purl.org/rss/1.0/">
+    <owl:Ontology rdf:about="http://microbrew.it/beer.owl">
+        <rdfs:label>Beer Ontology, OWL Lite</rdfs:label>
+        <owl:versionInfo>beer_v0.4.owl, based on http://purl.org/net/ontology/beer_v0.3.owl</owl:versionInfo>
+        <rdfs:comment>
+    	An ontology that models types of beer and brewers/brands.
+	http://purl.org/net/ontology/beer.owl
+	
+	WordNet		beer -- (a general name for alcoholic beverages made by fermenting a cereal (or mixture of cereals) flavored with hops)
+			http://www.cogsci.princeton.edu/cgi-bin/webwn2.0?stage=1&amp;word=beer
+	
+	History		Based on http://www.csd.abdn.ac.uk/research/AgentCities/ontologies/beer#
+	
+    	2004-04-02	* Converted to OWL-Lite by David and http://www.mindswap.org/2002/owl.html
+			* Changed concept hierarchy of beers: added top/bottom-fermention.
+	2004-08-24	* Removed FuzzyMeasure.
+			* Added some German labels, a Property, some Instances.
+
+	@todo		* revamp completely, use http://de.wikipedia.org/wiki/Bier
+			* model constraints
+			* How about some instances? See http://brewery.org/brewery/library/AlClbinger.html  !!
+			* Percentage as subclass of float?
+			
+	Hints		* model purity requirements (german purity law): barley/wheat (kindof grain): malt, hops, water (and yeast (yet unknown around 1516))
+			* For the preparation of beer, only malt, hops, yeast and water can be used.
+			* Typically, beers are made from water, malted barley, hops, fermented by yeast. The addition of other flavorings or sources of sugar is not uncommon.
+    </rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://microbrew.it/beer.owl#source -->
+
+    <owl:AnnotationProperty rdf:about="&mb;source"/>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#styleLetter -->
+
+    <owl:AnnotationProperty rdf:about="&mb;styleLetter"/>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#styleNumber -->
+
+    <owl:AnnotationProperty rdf:about="&mb;styleNumber"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://microbrew.it/beer.owl#awardCategory -->
+
+    <owl:ObjectProperty rdf:about="&mb;awardCategory">
+        <rdfs:label xml:lang="en">awardCategory</rdfs:label>
+        <rdfs:domain rdf:resource="&mb;Award"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#awarded -->
+
+    <owl:ObjectProperty rdf:about="&mb;awarded">
+        <rdfs:label xml:lang="en">awarded</rdfs:label>
+        <rdfs:range rdf:resource="&mb;Award"/>
+        <rdfs:domain rdf:resource="&mb;BeerStyle"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#awardedAt -->
+
+    <owl:ObjectProperty rdf:about="&mb;awardedAt">
+        <rdfs:label xml:lang="en">awardedAt</rdfs:label>
+        <rdfs:domain rdf:resource="&mb;Award"/>
+        <rdfs:range rdf:resource="&mb;Festival"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#brewedBy -->
+
+    <owl:ObjectProperty rdf:about="&mb;brewedBy">
+        <rdfs:label xml:lang="en">brewedBy</rdfs:label>
+        <rdfs:domain rdf:resource="&mb;BeerStyle"/>
+        <rdfs:range rdf:resource="&mb;Brewery"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#brews -->
+
+    <owl:ObjectProperty rdf:about="&mb;brews">
+        <rdfs:label xml:lang="en">brews</rdfs:label>
+        <rdfs:range rdf:resource="&mb;BeerStyle"/>
+        <rdfs:domain rdf:resource="&mb;Brewery"/>
+        <owl:inverseOf rdf:resource="&mb;brewedBy"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#locatedIn -->
+
+    <owl:ObjectProperty rdf:about="&mb;locatedIn">
+        <rdfs:label xml:lang="en">locatedIn</rdfs:label>
+        <rdfs:domain rdf:resource="&mb;Brewery"/>
+        <rdfs:range rdf:resource="&mb;Region"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#madeFrom -->
+
+    <owl:ObjectProperty rdf:about="&mb;madeFrom">
+        <rdfs:label xml:lang="en">madeFrom</rdfs:label>
+        <rdfs:domain rdf:resource="&mb;BeerStyle"/>
+        <rdfs:range rdf:resource="&mb;Ingredient"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#maltedTo -->
+
+    <owl:ObjectProperty rdf:about="&mb;maltedTo">
+        <rdfs:label xml:lang="en">maltedTo</rdfs:label>
+        <rdfs:domain rdf:resource="&mb;Grain"/>
+        <rdfs:range rdf:resource="&mb;Malt"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#producedBy -->
+
+    <owl:ObjectProperty rdf:about="&mb;producedBy">
+        <rdfs:label xml:lang="en">producedBy</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#produces -->
+
+    <owl:ObjectProperty rdf:about="&mb;produces">
+        <rdfs:label xml:lang="en">produces</rdfs:label>
+        <owl:inverseOf rdf:resource="&mb;producedBy"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#sells -->
+
+    <owl:ObjectProperty rdf:about="&mb;sells">
+        <rdfs:label xml:lang="en">sells</rdfs:label>
+        <rdfs:range rdf:resource="&mb;BeerStyle"/>
+        <rdfs:domain rdf:resource="&mb;Retailer"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#soldBy -->
+
+    <owl:ObjectProperty rdf:about="&mb;soldBy">
+        <rdfs:label xml:lang="en">soldBy</rdfs:label>
+        <rdfs:domain rdf:resource="&mb;BeerStyle"/>
+        <rdfs:range rdf:resource="&mb;Retailer"/>
+        <owl:inverseOf rdf:resource="&mb;sells"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#sponsor -->
+
+    <owl:ObjectProperty rdf:about="&mb;sponsor">
+        <rdfs:label xml:lang="en">sponsors</rdfs:label>
+        <rdfs:domain rdf:resource="&mb;Association"/>
+        <rdfs:range rdf:resource="&mb;Festival"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#topObjectProperty -->
+
+    <rdf:Description rdf:about="&owl;topObjectProperty">
+        <rdfs:label xml:lang="en">topObjectProperty</rdfs:label>
+    </rdf:Description>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://microbrew.it/beer.owl#hasEBC -->
+
+    <owl:DatatypeProperty rdf:about="&mb;hasEBC">
+        <rdfs:label xml:lang="en">hasEBC</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#hasSRM -->
+
+    <owl:DatatypeProperty rdf:about="&mb;hasSRM">
+        <rdfs:label xml:lang="en">hasSRM</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2001/vcard-rdf/3.0#latitude -->
+
+    <owl:DatatypeProperty rdf:about="&vcard;latitude">
+        <rdfs:label xml:lang="en">latitude</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2001/vcard-rdf/3.0#longitude -->
+
+    <owl:DatatypeProperty rdf:about="&vcard;longitude">
+        <rdfs:label xml:lang="en">longitude</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.w3.org/2001/vcard-rdf/3.0#region -->
+
+    <owl:DatatypeProperty rdf:about="&vcard;region">
+        <rdfs:label xml:lang="en">region</rdfs:label>
+        <rdfs:domain rdf:resource="&vcard;Address"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/account -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;account">
+        <rdfs:label xml:lang="en">account</rdfs:label>
+        <rdfs:domain rdf:resource="&mb;User"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://xmlns.com/foaf/0.1/accountName -->
+
+    <owl:DatatypeProperty rdf:about="&foaf;accountName">
+        <rdfs:label xml:lang="en">accountName</rdfs:label>
+        <rdfs:domain rdf:resource="&mb;User"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://microbrew.it/beer.owl#2_Row_Brewers -->
+
+    <owl:Class rdf:about="&mb;2_Row_Brewers">
+        <rdfs:label xml:lang="en">2_Row_Brewers</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Briess"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#2_Row_Carapils -->
+
+    <owl:Class rdf:about="&mb;2_Row_Carapils">
+        <rdfs:label xml:lang="en">2_Row_Carapils</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Briess"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#6_Row_Brewers -->
+
+    <owl:Class rdf:about="&mb;6_Row_Brewers">
+        <rdfs:label xml:lang="en">6_Row_Brewers</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Briess"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Acid -->
+
+    <owl:Class rdf:about="&mb;Acid">
+        <rdfs:label xml:lang="en">Acid</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Alcohol-Free_Malt_Tonic -->
+
+    <owl:Class rdf:about="&mb;Alcohol-Free_Malt_Tonic">
+        <rdfs:label>Alcohol-Free Malt Tonic</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Non-Alcoholic_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Ale -->
+
+    <owl:Class rdf:about="&mb;Ale">
+        <rdfs:subClassOf rdf:resource="&mb;BeerStyle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Amber -->
+
+    <owl:Class rdf:about="&mb;Amber">
+        <rdfs:label xml:lang="en">Amber</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Amber_Ale -->
+
+    <owl:Class rdf:about="&mb;Amber_Ale">
+        <rdfs:label>Amber Ale
+</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Amber_Lager -->
+
+    <owl:Class rdf:about="&mb;Amber_Lager">
+        <rdfs:label>Amber Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Amber_Lager -->
+
+    <owl:Class rdf:about="&mb;American-Style_Amber_Lager">
+        <rdfs:label xml:lang="en">American-Style Amber Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Amber_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Amber_Low_Calorie_Lager -->
+
+    <owl:Class rdf:about="&mb;American-Style_Amber_Low_Calorie_Lager">
+        <rdfs:label xml:lang="en">American-Style Amber Low Calorie Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Amber_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Amber_Red_Ale -->
+
+    <owl:Class rdf:about="&mb;American-Style_Amber_Red_Ale">
+        <rdfs:label>American Style Amber/Red Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Amber_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Barley_Wine_Ale -->
+
+    <owl:Class rdf:about="&mb;American-Style_Barley_Wine_Ale">
+        <rdfs:label>American-Style Barley Wine Ale
+
+</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Barley_Wine"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Brown_Ale -->
+
+    <owl:Class rdf:about="&mb;American-Style_Brown_Ale">
+        <rdfs:label>American-Style Brown Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Brown_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Dark_Lager -->
+
+    <owl:Class rdf:about="&mb;American-Style_Dark_Lager">
+        <rdfs:label xml:lang="en">American-Style Dark Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Dark_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Dry_Lager -->
+
+    <owl:Class rdf:about="&mb;American-Style_Dry_Lager">
+        <rdfs:label>American-Style Dry Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Fruit_Beer -->
+
+    <owl:Class rdf:about="&mb;American-Style_Fruit_Beer">
+        <rdfs:label>American-Style Fruit Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Fruit_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Ice_Lager -->
+
+    <owl:Class rdf:about="&mb;American-Style_Ice_Lager">
+        <rdfs:label xml:lang="en">American-Style Ice Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Imperial_Stout -->
+
+    <owl:Class rdf:about="&mb;American-Style_Imperial_Stout">
+        <rdfs:label>American-Style Imperial Stout</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Stout"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_India_Pale_Ale -->
+
+    <owl:Class rdf:about="&mb;American-Style_India_Pale_Ale">
+        <rdfs:label>American-Style India Pale Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;India_Pale_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Light_Low_Calorie_Lager -->
+
+    <owl:Class rdf:about="&mb;American-Style_Light_Low_Calorie_Lager">
+        <rdfs:label>American-Style Light Low Calorie Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Low-Carbohydrate_Light_Lager -->
+
+    <owl:Class rdf:about="&mb;American-Style_Low-Carbohydrate_Light_Lager">
+        <rdfs:label>American-Style Low-Carbohydrate Light Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Marzen_Oktoberfest -->
+
+    <owl:Class rdf:about="&mb;American-Style_Marzen_Oktoberfest">
+        <rdfs:label xml:lang="en">American-Style Märzen/Oktoberfest</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Amber_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Pale_Ale -->
+
+    <owl:Class rdf:about="&mb;American-Style_Pale_Ale">
+        <rdfs:label>American-Style Pale Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Pale_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Pilsner -->
+
+    <owl:Class rdf:about="&mb;American-Style_Pilsner">
+        <rdfs:label xml:lang="en">American-Style Pilsner</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Premium_Lager -->
+
+    <owl:Class rdf:about="&mb;American-Style_Premium_Lager">
+        <rdfs:label>American-Style Premium Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Sour_Ale -->
+
+    <owl:Class rdf:about="&mb;American-Style_Sour_Ale">
+        <rdfs:label xml:lang="en">American-Style Sour Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Sour_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Stout -->
+
+    <owl:Class rdf:about="&mb;American-Style_Stout">
+        <rdfs:label>American-Style Stout</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Stout"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Strong_Pale_Ale -->
+
+    <owl:Class rdf:about="&mb;American-Style_Strong_Pale_Ale">
+        <rdfs:label>American-Style Strong Pale Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Pale_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American-Style_Wheat_Wine_Ale -->
+
+    <owl:Class rdf:about="&mb;American-Style_Wheat_Wine_Ale">
+        <rdfs:label>American-Style Wheat Wine Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wheat_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American_Cream_Ale_or_Lager -->
+
+    <owl:Class rdf:about="&mb;American_Cream_Ale_or_Lager">
+        <rdfs:label>American Cream Ale or Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hybrid_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American_Lager -->
+
+    <owl:Class rdf:about="&mb;American_Lager">
+        <rdfs:label xml:lang="en">American Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American_Malt_Liquor -->
+
+    <owl:Class rdf:about="&mb;American_Malt_Liquor">
+        <rdfs:label xml:lang="en">American Malt Liquor</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#American_Rye_Ale_or_Lager_with_or_without_Yeast -->
+
+    <owl:Class rdf:about="&mb;American_Rye_Ale_or_Lager_with_or_without_Yeast">
+        <rdfs:label>American Rye Ale or Lager with or without Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Rye_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Aromatic -->
+
+    <owl:Class rdf:about="&mb;Aromatic">
+        <rdfs:label xml:lang="en">Aromatic</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Association -->
+
+    <owl:Class rdf:about="&mb;Association">
+        <rdfs:label xml:lang="en">Association</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Organisation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Australasian_Latin_American_or_Tropical_Style_Light_Lager -->
+
+    <owl:Class rdf:about="&mb;Australasian_Latin_American_or_Tropical_Style_Light_Lager">
+        <rdfs:label xml:lang="en">Australasian,Latin American or Tropical Style Light Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Award -->
+
+    <owl:Class rdf:about="&mb;Award">
+        <rdfs:label xml:lang="en">Award</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Baltic-Style_Porter -->
+
+    <owl:Class rdf:about="&mb;Baltic-Style_Porter">
+        <rdfs:label xml:lang="en">Baltic-Style Porter</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Porter"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Bamberg-Style_Bock_Rauchbier -->
+
+    <owl:Class rdf:about="&mb;Bamberg-Style_Bock_Rauchbier">
+        <rdfs:label xml:lang="en">Bamberg-Style Bock Rauchbier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Smoke_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Bamberg-Style_Helles_Rauchbier -->
+
+    <owl:Class rdf:about="&mb;Bamberg-Style_Helles_Rauchbier">
+        <rdfs:label xml:lang="en">Bamberg-Style Helles Rauchbier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Smoke_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Bamberg-Style_Märzen_Rauchbier -->
+
+    <owl:Class rdf:about="&mb;Bamberg-Style_Märzen_Rauchbier">
+        <rdfs:label xml:lang="en">Bamberg-Style Märzen Rauchbier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Smoke_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Bamberg-Style_Weiss_Rauchbier -->
+
+    <owl:Class rdf:about="&mb;Bamberg-Style_Weiss_Rauchbier">
+        <rdfs:label xml:lang="en">Bamberg-Style Weiss Rauchbier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Smoke_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Barley -->
+
+    <owl:Class rdf:about="&mb;Barley">
+        <rdfs:label xml:lang="de">Gerste</rdfs:label>
+        <rdfs:label xml:lang="en">Barley</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Grain"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Barley_Wine -->
+
+    <owl:Class rdf:about="&mb;Barley_Wine">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Batch -->
+
+    <owl:Class rdf:about="&mb;Batch">
+        <rdfs:label xml:lang="en">Batch</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Beer -->
+
+    <owl:Class rdf:about="&mb;Beer">
+        <rdfs:label xml:lang="en">Beer</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#BeerStyle -->
+
+    <owl:Class rdf:about="&mb;BeerStyle">
+        <rdfs:label xml:lang="en">BeerStyle</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian-Style_Blonde__Ale -->
+
+    <owl:Class rdf:about="&mb;Belgian-Style_Blonde__Ale">
+        <rdfs:label xml:lang="en">Belgian-Style Blonde  Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Belgian_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian-Style_Dark_Strong_Ale -->
+
+    <owl:Class rdf:about="&mb;Belgian-Style_Dark_Strong_Ale">
+        <rdfs:label xml:lang="en">Belgian-Style Dark Strong Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Belgian_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian-Style_Dubbel -->
+
+    <owl:Class rdf:about="&mb;Belgian-Style_Dubbel">
+        <rdfs:label xml:lang="en">Belgian-Style Dubbel</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Belgian_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian-Style_Flanders/Oud_Bruin_or_Oud_Red_Ales -->
+
+    <owl:Class rdf:about="&mb;Belgian-Style_Flanders/Oud_Bruin_or_Oud_Red_Ales">
+        <rdfs:label xml:lang="en">Belgian-Style Flanders/Oud Bruin or Oud Red Ales</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Sour_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian-Style_Gueuze_Lambic -->
+
+    <owl:Class rdf:about="&mb;Belgian-Style_Gueuze_Lambic">
+        <rdfs:label xml:lang="en">Belgian-Style Gueuze Lambic</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Sour_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian-Style_Lambic -->
+
+    <owl:Class rdf:about="&mb;Belgian-Style_Lambic">
+        <rdfs:label xml:lang="en">Belgian-Style Lambic</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Sour_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian-Style_Pale_Ale -->
+
+    <owl:Class rdf:about="&mb;Belgian-Style_Pale_Ale">
+        <rdfs:label xml:lang="en">Belgian-Style Pale Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Belgian_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian-Style_Pale_Strong_Ale -->
+
+    <owl:Class rdf:about="&mb;Belgian-Style_Pale_Strong_Ale">
+        <rdfs:label xml:lang="en">Belgian-Style Pale Strong Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Belgian_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian-Style_Saison -->
+
+    <owl:Class rdf:about="&mb;Belgian-Style_Saison">
+        <rdfs:label xml:lang="en">Belgian-Style Saison</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Belgian_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian-Style_Table_Beer -->
+
+    <owl:Class rdf:about="&mb;Belgian-Style_Table_Beer">
+        <rdfs:label xml:lang="en">Belgian-Style Table Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Belgian_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian-Style_Tripel -->
+
+    <owl:Class rdf:about="&mb;Belgian-Style_Tripel">
+        <rdfs:label xml:lang="en">Belgian-Style Tripel</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Belgian_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian-Style_Wit_or_Wheat -->
+
+    <owl:Class rdf:about="&mb;Belgian-Style_Wit_or_Wheat">
+        <rdfs:label xml:lang="en">Belgian-Style Wit or Wheat</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wheat_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian_Ale -->
+
+    <owl:Class rdf:about="&mb;Belgian_Ale">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Belgian_Style_Fruit_Lambic -->
+
+    <owl:Class rdf:about="&mb;Belgian_Style_Fruit_Lambic">
+        <rdfs:label xml:lang="en">Belgian Style Fruit Lambic</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Fruit_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Berliner-Style_Weisse -->
+
+    <owl:Class rdf:about="&mb;Berliner-Style_Weisse">
+        <rdfs:label xml:lang="en">Berliner-Style Weisse</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wheat_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Biscuit -->
+
+    <owl:Class rdf:about="&mb;Biscuit">
+        <rdfs:label xml:lang="en">Biscuit</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Black -->
+
+    <owl:Class rdf:about="&mb;Black">
+        <rdfs:label xml:lang="en">Black</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Black_Barley -->
+
+    <owl:Class rdf:about="&mb;Black_Barley">
+        <rdfs:label xml:lang="en">Black_Barley</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Barley"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Bock -->
+
+    <owl:Class rdf:about="&mb;Bock">
+        <rdfs:label>Bock
+</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Bohemian-Style_Pilsener -->
+
+    <owl:Class rdf:about="&mb;Bohemian-Style_Pilsener">
+        <rdfs:label xml:lang="en">Bohemian-Style Pilsener</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Brewery -->
+
+    <owl:Class rdf:about="&mb;Brewery">
+        <rdfs:label xml:lang="en">Brewery</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Organisation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Briess -->
+
+    <owl:Class rdf:about="&mb;Briess">
+        <rdfs:label xml:lang="en">Briess</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#British-Style_Imperial_Stout -->
+
+    <owl:Class rdf:about="&mb;British-Style_Imperial_Stout">
+        <rdfs:label xml:lang="en">British-Style Imperial Stout</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Stout"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Brown_Ale -->
+
+    <owl:Class rdf:about="&mb;Brown_Ale">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Brown_Porter -->
+
+    <owl:Class rdf:about="&mb;Brown_Porter">
+        <rdfs:subClassOf rdf:resource="&mb;Porter"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#California_Common_Beer -->
+
+    <owl:Class rdf:about="&mb;California_Common_Beer">
+        <rdfs:label xml:lang="en">California Common Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hybrid_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Caramel -->
+
+    <owl:Class rdf:about="&mb;Caramel">
+        <rdfs:label xml:lang="en">Caramel</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Carapils -->
+
+    <owl:Class rdf:about="&mb;Carapils">
+        <rdfs:label xml:lang="en">Carapils</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Cascade -->
+
+    <owl:Class rdf:about="&mb;Cascade">
+        <rdfs:label xml:lang="en">Cascade</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Centennial -->
+
+    <owl:Class rdf:about="&mb;Centennial">
+        <rdfs:label>Centennial</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Chinook -->
+
+    <owl:Class rdf:about="&mb;Chinook">
+        <rdfs:label xml:lang="en">Chinook</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Chocolate -->
+
+    <owl:Class rdf:about="&mb;Chocolate">
+        <rdfs:label xml:lang="en">Chocolate</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Chocolate_Cocoa-Flavored_Beer -->
+
+    <owl:Class rdf:about="&mb;Chocolate_Cocoa-Flavored_Beer">
+        <rdfs:label>Chocolate/Cocoa-Flavored_Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Speciality_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Classic_English-Style_Pale_Ale -->
+
+    <owl:Class rdf:about="&mb;Classic_English-Style_Pale_Ale">
+        <rdfs:label xml:lang="en">Classic English-Style Pale Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Pale_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Classic_Irish-Style_Dry_Stout -->
+
+    <owl:Class rdf:about="&mb;Classic_Irish-Style_Dry_Stout">
+        <rdfs:label xml:lang="en">Classic Irish-Style Dry Stout</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Stout"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Coffee-Flavored_Beer -->
+
+    <owl:Class rdf:about="&mb;Coffee-Flavored_Beer">
+        <rdfs:label xml:lang="en">Coffee-Flavored Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Speciality_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Columbus -->
+
+    <owl:Class rdf:about="&mb;Columbus">
+        <rdfs:label>Columbus
+</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Crystal -->
+
+    <owl:Class rdf:about="&mb;Crystal">
+        <rdfs:label>Crystal</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Dark_American_Wheat_Ale_or_Lager_without_Yeast -->
+
+    <owl:Class rdf:about="&mb;Dark_American_Wheat_Ale_or_Lager_without_Yeast">
+        <rdfs:label xml:lang="en">Dark American Wheat Ale or Lager without Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wheat_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Dark_American_Wheat_or_Lager_with_Yeast -->
+
+    <owl:Class rdf:about="&mb;Dark_American_Wheat_or_Lager_with_Yeast">
+        <rdfs:label xml:lang="en">Dark American Wheat or Lager with Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wheat_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Dark_Lager -->
+
+    <owl:Class rdf:about="&mb;Dark_Lager">
+        <rdfs:label>Dark Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Dortmunder_European-Style_Export -->
+
+    <owl:Class rdf:about="&mb;Dortmunder_European-Style_Export">
+        <rdfs:label xml:lang="en">Dortmunder/European-Style Export</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Dry_Extract -->
+
+    <owl:Class rdf:about="&mb;Dry_Extract">
+        <rdfs:label xml:lang="en">Dry Extract</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Extract"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Dry_Yeast -->
+
+    <owl:Class rdf:about="&mb;Dry_Yeast">
+        <rdfs:label xml:lang="en">Dry Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Yeast"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#English-Style_Barley_Wine_Ale -->
+
+    <owl:Class rdf:about="&mb;English-Style_Barley_Wine_Ale">
+        <rdfs:label>English Style Barley Wine Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Barley_Wine"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#English-Style_Brown_Ale -->
+
+    <owl:Class rdf:about="&mb;English-Style_Brown_Ale">
+        <rdfs:label xml:lang="en">English-Style Brown Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Brown_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#English-Style_Dark_Mild_Ale -->
+
+    <owl:Class rdf:about="&mb;English-Style_Dark_Mild_Ale">
+        <rdfs:label xml:lang="en">English-Style Dark Mild Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Brown_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#English-Style_India_Pale_Ale -->
+
+    <owl:Class rdf:about="&mb;English-Style_India_Pale_Ale">
+        <rdfs:label xml:lang="en">English-Style India Pale Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;India_Pale_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#English-Style_Pale_Mild_Ale -->
+
+    <owl:Class rdf:about="&mb;English-Style_Pale_Mild_Ale">
+        <rdfs:label xml:lang="en">English-Style Pale Mild Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Pale_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#English_Summer_Ale -->
+
+    <owl:Class rdf:about="&mb;English_Summer_Ale">
+        <rdfs:label xml:lang="en">English Summer Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#European-Style_Dark_Munchner_Dunkel -->
+
+    <owl:Class rdf:about="&mb;European-Style_Dark_Munchner_Dunkel">
+        <rdfs:label xml:lang="en">European-Style Dark/Münchner Dunkel</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Dark_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#European_Low-Alcohol_Lager_German_Leicht -->
+
+    <owl:Class rdf:about="&mb;European_Low-Alcohol_Lager_German_Leicht">
+        <rdfs:label xml:lang="en">European Low-Alcohol Lager/German Leicht</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Extra_Special_Bitter_or_Strong_Bitter -->
+
+    <owl:Class rdf:about="&mb;Extra_Special_Bitter_or_Strong_Bitter">
+        <rdfs:label xml:lang="en">Extra Special Bitter or Strong Bitter</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Pale_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Extract -->
+
+    <owl:Class rdf:about="&mb;Extract">
+        <rdfs:label xml:lang="en">Extract</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Ingredient"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Festival -->
+
+    <owl:Class rdf:about="&mb;Festival">
+        <rdfs:label xml:lang="en">Festival</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Flaked -->
+
+    <owl:Class rdf:about="&mb;Flaked">
+        <rdfs:label xml:lang="en">Flaked</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Barley"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Foreign-Style_Stout -->
+
+    <owl:Class rdf:about="&mb;Foreign-Style_Stout">
+        <rdfs:label xml:lang="en">Foreign-Style Stout</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Stout"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#French-Style_Biere_de_Garde -->
+
+    <owl:Class rdf:about="&mb;French-Style_Biere_de_Garde">
+        <rdfs:label>French-Style Bière de Garde</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;French_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#French_Ale -->
+
+    <owl:Class rdf:about="&mb;French_Ale">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Fruit_Beer -->
+
+    <owl:Class rdf:about="&mb;Fruit_Beer">
+        <rdfs:label>Fruit Beer
+</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Mixed"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Fuggle -->
+
+    <owl:Class rdf:about="&mb;Fuggle">
+        <rdfs:label>Fuggle</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Galena -->
+
+    <owl:Class rdf:about="&mb;Galena">
+        <rdfs:label xml:lang="en">Galena</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Garden_Beer -->
+
+    <owl:Class rdf:about="&mb;Garden_Beer">
+        <rdfs:label>Garden Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Speciality_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#German-Style_Brown_Ale_Dusseldorf-Style_Altbier -->
+
+    <owl:Class rdf:about="&mb;German-Style_Brown_Ale_Dusseldorf-Style_Altbier">
+        <rdfs:label xml:lang="en">German-Style Brown Ale/Düsseldorf-Style Altbier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hybrid_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#German-Style_Doppelbock -->
+
+    <owl:Class rdf:about="&mb;German-Style_Doppelbock">
+        <rdfs:label xml:lang="en">German-Style Doppelbock</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Bock"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#German-Style_Heller_Bock_Maibock -->
+
+    <owl:Class rdf:about="&mb;German-Style_Heller_Bock_Maibock">
+        <rdfs:label xml:lang="en">German-Style Heller Bock/Maibock</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Bock"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#German-Style_Kolsch_Koln-Style_Kolsch -->
+
+    <owl:Class rdf:about="&mb;German-Style_Kolsch_Koln-Style_Kolsch">
+        <rdfs:label xml:lang="en">German-Style Kölsch/Köln-Style Kölsch</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hybrid_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#German-Style_Leichtes_Weizen_Weissbier -->
+
+    <owl:Class rdf:about="&mb;German-Style_Leichtes_Weizen_Weissbier">
+        <rdfs:label xml:lang="en">German-Style Leichtes Weizen Weissbier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wheat_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#German-Style_Marzen -->
+
+    <owl:Class rdf:about="&mb;German-Style_Marzen">
+        <rdfs:label xml:lang="en">German-Style Märzen</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Amber_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#German-Style_Oktoberfest_Wiesen -->
+
+    <owl:Class rdf:about="&mb;German-Style_Oktoberfest_Wiesen">
+        <rdfs:label xml:lang="en">German-Style Oktoberfest/Wiesen</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Amber_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#German-Style_Pilsener -->
+
+    <owl:Class rdf:about="&mb;German-Style_Pilsener">
+        <rdfs:label xml:lang="en">German-Style Pilsener</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#German-Style_Rye_Ale_(Roggenbier)_with_or_without_Yeast -->
+
+    <owl:Class rdf:about="&mb;German-Style_Rye_Ale_(Roggenbier)_with_or_without_Yeast">
+        <rdfs:subClassOf rdf:resource="&mb;Rye_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#German-Style_Schwarzbier -->
+
+    <owl:Class rdf:about="&mb;German-Style_Schwarzbier">
+        <rdfs:label xml:lang="en">German-Style Schwarzbier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Dark_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#German-Style_Strong_Eisbock -->
+
+    <owl:Class rdf:about="&mb;German-Style_Strong_Eisbock">
+        <rdfs:label xml:lang="en">German-Style Strong Eisbock</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Bock"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Gluten_Free_Beer -->
+
+    <owl:Class rdf:about="&mb;Gluten_Free_Beer">
+        <rdfs:label xml:lang="en">Gluten Free Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Speciality_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Golden_Ale -->
+
+    <owl:Class rdf:about="&mb;Golden_Ale">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Golden_Lager -->
+
+    <owl:Class rdf:about="&mb;Golden_Lager">
+        <rdfs:label>Golden Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Golden_or_Blonde_Ale -->
+
+    <owl:Class rdf:about="&mb;Golden_or_Blonde_Ale">
+        <rdfs:label>Golden or Blonde Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Grain -->
+
+    <owl:Class rdf:about="&mb;Grain">
+        <rdfs:label xml:lang="de">Getreide</rdfs:label>
+        <rdfs:label xml:lang="en">Grain</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Ingredient"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Hallertau -->
+
+    <owl:Class rdf:about="&mb;Hallertau">
+        <rdfs:label xml:lang="en">Hallertau</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Herb_and_Spice_Beer -->
+
+    <owl:Class rdf:about="&mb;Herb_and_Spice_Beer">
+        <rdfs:label xml:lang="en">Herb and Spice Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Speciality_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Hops -->
+
+    <owl:Class rdf:about="&mb;Hops">
+        <rdfs:label xml:lang="de">Hopfen</rdfs:label>
+        <rdfs:label xml:lang="en">Hops</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Ingredient"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Hulls -->
+
+    <owl:Class rdf:about="&mb;Hulls">
+        <rdfs:label xml:lang="en">Hulls</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Barley"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Hybrid_Beer -->
+
+    <owl:Class rdf:about="&mb;Hybrid_Beer">
+        <rdfs:label>Hybrid Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Mixed"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Imperial_or_Double_India_Pale_Ale -->
+
+    <owl:Class rdf:about="&mb;Imperial_or_Double_India_Pale_Ale">
+        <rdfs:label>Imperial or Double India Pale Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;India_Pale_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Imperial_or_Double_Red_Ale -->
+
+    <owl:Class rdf:about="&mb;Imperial_or_Double_Red_Ale">
+        <rdfs:label>Imperial or Double Red Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Amber_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#India_Pale_Ale -->
+
+    <owl:Class rdf:about="&mb;India_Pale_Ale">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Ingredient -->
+
+    <owl:Class rdf:about="&mb;Ingredient">
+        <rdfs:label xml:lang="en">Ingredient</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#International-Style_Pale_Ale -->
+
+    <owl:Class rdf:about="&mb;International-Style_Pale_Ale">
+        <rdfs:label xml:lang="en">International-Style Pale Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Pale_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#International-Style_Pilsner -->
+
+    <owl:Class rdf:about="&mb;International-Style_Pilsner">
+        <rdfs:label xml:lang="en">International-Style Pilsner</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Irish-Style_Red_Ale -->
+
+    <owl:Class rdf:about="&mb;Irish-Style_Red_Ale">
+        <rdfs:label xml:lang="en">Irish-Style Red Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Irish_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Irish_Ale -->
+
+    <owl:Class rdf:about="&mb;Irish_Ale">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Japanese_Sake_Yeast_Beer -->
+
+    <owl:Class rdf:about="&mb;Japanese_Sake_Yeast_Beer">
+        <rdfs:label xml:lang="en">Japanese Sake Yeast Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Speciality_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Kellerbier_Cellar_beer_or_Zwickelbier -->
+
+    <owl:Class rdf:about="&mb;Kellerbier_Cellar_beer_or_Zwickelbier">
+        <rdfs:label xml:lang="en">Kellerbier (Cellar beer) or Zwickelbier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hybrid_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Kent_Golding -->
+
+    <owl:Class rdf:about="&mb;Kent_Golding">
+        <rdfs:label xml:lang="en">Kent Golding</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Lager -->
+
+    <owl:Class rdf:about="&mb;Lager">
+        <rdfs:subClassOf rdf:resource="&mb;BeerStyle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Leipzig-Style_Gose -->
+
+    <owl:Class rdf:about="&mb;Leipzig-Style_Gose">
+        <rdfs:label xml:lang="en">Leipzig-Style Gose</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Sour_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Liberty -->
+
+    <owl:Class rdf:about="&mb;Liberty">
+        <rdfs:label>Liberty</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Light_American_Ale_or_Lager_with_Yeast -->
+
+    <owl:Class rdf:about="&mb;Light_American_Ale_or_Lager_with_Yeast">
+        <rdfs:label xml:lang="en">Light American Ale or Lager with Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wheat_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Light_American_Ale_or_Lager_without_Yeast -->
+
+    <owl:Class rdf:about="&mb;Light_American_Ale_or_Lager_without_Yeast">
+        <rdfs:label xml:lang="en">Light American Ale or Lager without Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wheat_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Liquid_Extract -->
+
+    <owl:Class rdf:about="&mb;Liquid_Extract">
+        <rdfs:label xml:lang="en">Liquid Extract</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Extract"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Liquid_Yeast -->
+
+    <owl:Class rdf:about="&mb;Liquid_Yeast">
+        <rdfs:label xml:lang="en">Liquid Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Yeast"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Magnum -->
+
+    <owl:Class rdf:about="&mb;Magnum">
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Malt -->
+
+    <owl:Class rdf:about="&mb;Malt">
+        <rdfs:label xml:lang="de">Malz</rdfs:label>
+        <rdfs:label xml:lang="en">Malt</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Ingredient"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Microbrewery -->
+
+    <owl:Class rdf:about="&mb;Microbrewery">
+        <rdfs:label xml:lang="en">Microbrewery</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Brewery"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Mixed -->
+
+    <owl:Class rdf:about="&mb;Mixed">
+        <rdfs:subClassOf rdf:resource="&mb;BeerStyle"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Mosaic -->
+
+    <owl:Class rdf:about="&mb;Mosaic">
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Mount_Hood -->
+
+    <owl:Class rdf:about="&mb;Mount_Hood">
+        <rdfs:label xml:lang="en">Mount Hood</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Munchner-Style_Helles -->
+
+    <owl:Class rdf:about="&mb;Munchner-Style_Helles">
+        <rdfs:label xml:lang="en">Münchner-Style Helles</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Munich -->
+
+    <owl:Class rdf:about="&mb;Munich">
+        <rdfs:label xml:lang="en">Munich</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#New_Zealand_Hallertauer -->
+
+    <owl:Class rdf:about="&mb;New_Zealand_Hallertauer">
+        <rdfs:label>New Zealand Hallertauer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Non-Alcoholic_Beer -->
+
+    <owl:Class rdf:about="&mb;Non-Alcoholic_Beer">
+        <rdfs:label>Non-Alcoholic Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Mixed"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Non-Alcoholic_Malt_Beverages -->
+
+    <owl:Class rdf:about="&mb;Non-Alcoholic_Malt_Beverages">
+        <rdfs:label xml:lang="en">Non-Alcoholic Malt Beverages</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Non-Alcoholic_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Northern_Brewer -->
+
+    <owl:Class rdf:about="&mb;Northern_Brewer">
+        <rdfs:label>Northern Brewer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Nugget -->
+
+    <owl:Class rdf:about="&mb;Nugget">
+        <rdfs:label>Nugget</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Oatmeal_Stout -->
+
+    <owl:Class rdf:about="&mb;Oatmeal_Stout">
+        <rdfs:label xml:lang="en">Oatmeal Stout</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Stout"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Old_Ale -->
+
+    <owl:Class rdf:about="&mb;Old_Ale">
+        <rdfs:label xml:lang="en">Old Ale
+</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Amber_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Ordinary_Bitter -->
+
+    <owl:Class rdf:about="&mb;Ordinary_Bitter">
+        <rdfs:label xml:lang="en">Ordinary Bitter</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Golden_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Organisation -->
+
+    <owl:Class rdf:about="&mb;Organisation">
+        <rdfs:label xml:lang="en">Organisation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Other -->
+
+    <owl:Class rdf:about="&mb;Other">
+        <rdfs:label xml:lang="en">Other</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Ingredient"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Other_Belgian-Style_Ales -->
+
+    <owl:Class rdf:about="&mb;Other_Belgian-Style_Ales">
+        <rdfs:label xml:lang="en">Other Belgian-Style Ales</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Belgian_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Pacific_Gem -->
+
+    <owl:Class rdf:about="&mb;Pacific_Gem">
+        <rdfs:label>Pacific Gem</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Pale -->
+
+    <owl:Class rdf:about="&mb;Pale">
+        <rdfs:label xml:lang="en">Pale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Pale_Ale -->
+
+    <owl:Class rdf:about="&mb;Pale_Ale">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Perle -->
+
+    <owl:Class rdf:about="&mb;Perle">
+        <rdfs:label xml:lang="en">Perle</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Porter -->
+
+    <owl:Class rdf:about="&mb;Porter">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Pumpkin_Beer -->
+
+    <owl:Class rdf:about="&mb;Pumpkin_Beer">
+        <rdfs:label xml:lang="en">Pumpkin Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Speciality_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Raw -->
+
+    <owl:Class rdf:about="&mb;Raw">
+        <rdfs:label xml:lang="en">Raw</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Barley"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Recipe -->
+
+    <owl:Class rdf:about="&mb;Recipe">
+        <rdfs:label xml:lang="en">Recipe</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Region -->
+
+    <owl:Class rdf:about="&mb;Region">
+        <rdfs:label xml:lang="en">Region</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Retailer -->
+
+    <owl:Class rdf:about="&mb;Retailer">
+        <rdfs:label xml:lang="en">Retailer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Organisation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Rice -->
+
+    <owl:Class rdf:about="&mb;Rice">
+        <rdfs:label xml:lang="en">Rice</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Grain"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Robust_Porter -->
+
+    <owl:Class rdf:about="&mb;Robust_Porter">
+        <rdfs:label xml:lang="en">Robust Porter</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Porter"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Rye -->
+
+    <owl:Class rdf:about="&mb;Rye">
+        <rdfs:label xml:lang="en">Rye</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Grain"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Rye_Beer -->
+
+    <owl:Class rdf:about="&mb;Rye_Beer">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Saaz -->
+
+    <owl:Class rdf:about="&mb;Saaz">
+        <rdfs:label xml:lang="en">Saaz</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Scottish-Style_Export_Ale -->
+
+    <owl:Class rdf:about="&mb;Scottish-Style_Export_Ale">
+        <rdfs:label xml:lang="en">Scottish-Style Export Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Scottish_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Scottish-Style_Heavy_Ale -->
+
+    <owl:Class rdf:about="&mb;Scottish-Style_Heavy_Ale">
+        <rdfs:label xml:lang="en">Scottish-Style Heavy Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Scottish_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Scottish-Style_Light_Ale -->
+
+    <owl:Class rdf:about="&mb;Scottish-Style_Light_Ale">
+        <rdfs:label xml:lang="en">Scottish-Style Light Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Scottish_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Scottish_Ale -->
+
+    <owl:Class rdf:about="&mb;Scottish_Ale">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Simcoe -->
+
+    <owl:Class rdf:about="&mb;Simcoe">
+        <rdfs:label>Simcoe</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Smoke-Flavored_Beer -->
+
+    <owl:Class rdf:about="&mb;Smoke-Flavored_Beer">
+        <rdfs:label xml:lang="en">Smoke-Flavored Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Smoke_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Smoke_Beer -->
+
+    <owl:Class rdf:about="&mb;Smoke_Beer">
+        <rdfs:label>Smoke Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Mixed"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Sorachi_Ace -->
+
+    <owl:Class rdf:about="&mb;Sorachi_Ace">
+        <rdfs:label>Sorachi Ace</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Sour_Ale -->
+
+    <owl:Class rdf:about="&mb;Sour_Ale">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#South_German-Style_Bernsteinfarbenes_Weizen_Weissbier -->
+
+    <owl:Class rdf:about="&mb;South_German-Style_Bernsteinfarbenes_Weizen_Weissbier">
+        <rdfs:label xml:lang="en">South German-Style Bernsteinfarbenes Weizen Weissbier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wheat_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#South_German-Style_Dunkel_Weizen_Dunkel_Weissbier -->
+
+    <owl:Class rdf:about="&mb;South_German-Style_Dunkel_Weizen_Dunkel_Weissbier">
+        <rdfs:label xml:lang="en">South German-Style Dunkel Weizen Dunkel Weissbier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wheat_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#South_German-Style_Hefeweizen_Hefeweissbier -->
+
+    <owl:Class rdf:about="&mb;South_German-Style_Hefeweizen_Hefeweissbier">
+        <rdfs:label xml:lang="en">South German-Style Hefeweizen Hefeweissbier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wheat_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#South_German-Style_Kristal_Weizen_Kristal_Weissbier -->
+
+    <owl:Class rdf:about="&mb;South_German-Style_Kristal_Weizen_Kristal_Weissbier">
+        <rdfs:label xml:lang="en">South German-Style Kristal Weizen Kristal Weissbier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wheat_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#South_German-Style_Weizenbock_Weissbock -->
+
+    <owl:Class rdf:about="&mb;South_German-Style_Weizenbock_Weissbock">
+        <rdfs:label xml:lang="en">South German-Style Weizenbock Weissbock</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wheat_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Special_Bitter_or_Best_Bitter -->
+
+    <owl:Class rdf:about="&mb;Special_Bitter_or_Best_Bitter">
+        <rdfs:label xml:lang="en">Special Bitter or Best Bitter</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Amber_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Speciality_Beer -->
+
+    <owl:Class rdf:about="&mb;Speciality_Beer">
+        <rdfs:label>Speciality Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Mixed"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Specialty_Honey_Lager_or_Ale -->
+
+    <owl:Class rdf:about="&mb;Specialty_Honey_Lager_or_Ale">
+        <rdfs:label xml:lang="en">Specialty Honey Lager or Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Speciality_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Specialty_Stout -->
+
+    <owl:Class rdf:about="&mb;Specialty_Stout">
+        <rdfs:label>Specialty Stout</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Stout"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Sterling -->
+
+    <owl:Class rdf:about="&mb;Sterling">
+        <rdfs:label>Sterling</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Stout -->
+
+    <owl:Class rdf:about="&mb;Stout">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Strong_Ale -->
+
+    <owl:Class rdf:about="&mb;Strong_Ale">
+        <rdfs:label xml:lang="en">Strong Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Amber_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Strong_Scotch_Ale -->
+
+    <owl:Class rdf:about="&mb;Strong_Scotch_Ale">
+        <rdfs:label xml:lang="en">Strong Scotch Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Scottish_Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Sugar -->
+
+    <owl:Class rdf:about="&mb;Sugar">
+        <rdfs:label xml:lang="en">Sugar</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Ingredient"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Summit -->
+
+    <owl:Class rdf:about="&mb;Summit">
+        <rdfs:label>Summit</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Supplier -->
+
+    <owl:Class rdf:about="&mb;Supplier">
+        <rdfs:label xml:lang="en">Supplier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Organisation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Sweet_Stout -->
+
+    <owl:Class rdf:about="&mb;Sweet_Stout">
+        <rdfs:label xml:lang="en">Sweet Stout</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Stout"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Tettnang -->
+
+    <owl:Class rdf:about="&mb;Tettnang">
+        <rdfs:label xml:lang="en">Tettnang</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Torrefied -->
+
+    <owl:Class rdf:about="&mb;Torrefied">
+        <rdfs:label xml:lang="en">Torrefied</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Barley"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Town -->
+
+    <owl:Class rdf:about="&mb;Town">
+        <rdfs:label xml:lang="en">Town</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Region"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Traditional_German-Style_Bock -->
+
+    <owl:Class rdf:about="&mb;Traditional_German-Style_Bock">
+        <rdfs:label xml:lang="en">Traditional German-Style Bock</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Bock"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#User -->
+
+    <owl:Class rdf:about="&mb;User">
+        <rdfs:label xml:lang="en">User</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Vienna-Style_Lager -->
+
+    <owl:Class rdf:about="&mb;Vienna-Style_Lager">
+        <rdfs:label xml:lang="en">Vienna-Style Lager</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Amber_Lager"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP001 -->
+
+    <owl:Class rdf:about="&mb;WLP001">
+        <rdfs:label xml:lang="en">California Ale Yeast
+</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This yeast is famous for its clean flavors, balance and ability to be used in almost any style ale. It accentuates the hop flavors and is extremely versatile.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP002 -->
+
+    <owl:Class rdf:about="&mb;WLP002">
+        <rdfs:label xml:lang="en">English Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">A classic ESB strain from one of England&apos;s largest independent breweries. This yeast is best suited for English style ales including milds, bitters, porters, and English style stouts. This yeast will leave a beer very clear, and will leave some residual sweetness.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP004 -->
+
+    <owl:Class rdf:about="&mb;WLP004">
+        <rdfs:label xml:lang="en">Irish Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This is the yeast from one of the oldest stout producing breweries in the world. It produces a slight hint of diacetyl, balanced by a light fruitiness and slight dry crispness. Great for Irish ales, stouts, porters, browns, reds and a very interesting pale ale.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP005 -->
+
+    <owl:Class rdf:about="&mb;WLP005">
+        <rdfs:label xml:lang="en">British Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This yeast is a little more attenuative than WLP002. Like most English strains, this yeast produces malty beers. Excellent for all English style ales including bitter, pale ale, porter, and brown ale.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP006 -->
+
+    <owl:Class rdf:about="&mb;WLP006">
+        <rdfs:label xml:lang="en">Bedford British</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Ferments dry and flocculates very well. Produces a distinctive ester profile. Good choice for most English style ales including bitter, pale ale, porter, and brown ale.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP007 -->
+
+    <owl:Class rdf:about="&mb;WLP007">
+        <rdfs:label xml:lang="en">Dry English Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Clean, highly flocculent, and highly attenuative yeast. This yeast is similar to WLP002 in flavor profile, but is 10% more attenuative. This eliminates the residual sweetness, and makes the yeast well suited for high gravity ales. It is also reaches terminal gravity quickly. 80% attenuation will be reached even with 10% ABV beers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP008 -->
+
+    <owl:Class rdf:about="&mb;WLP008">
+        <rdfs:label xml:lang="en">East Coast Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Our &quot;Brewer Patriot&quot; strain can be used to reproduce many of the American versions of classic beer styles. Similar neutral character of WLP001, but less attenuation, less accentuation of hop bitterness, slightly less flocculation, and a little tartness. Very clean and low esters. Great yeast for golden, blonde, honey, pales and German alt style ales.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP009 -->
+
+    <owl:Class rdf:about="&mb;WLP009">
+        <rdfs:label xml:lang="en">Australian Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Produces a clean, malty beer. Pleasant ester character, can be described as &quot;bready.&quot; Can ferment successfully, and clean, at higher temperatures. This yeast combines good flocculation with good attenuation.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP011 -->
+
+    <owl:Class rdf:about="&mb;WLP011">
+        <rdfs:label xml:lang="en">European Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Malty, Northern European-origin ale yeast. Low ester production, giving a clean profile. Little to no sulfur production. Low attenuation helps to contribute to the malty character. Good for Alt, Kolsch, malty English ales, and fruit beers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP013 -->
+
+    <owl:Class rdf:about="&mb;WLP013">
+        <rdfs:label xml:lang="en">London Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Dry, malty ale yeast. Provides a complex, oakey ester character to your beer. Hop bitterness comes through well. This yeast is well suited for classic British pale ales, bitters, and stouts. Does not flocculate as much as WLP002 and WLP005.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP017 -->
+
+    <owl:Class rdf:about="&mb;WLP017">
+        <rdfs:label xml:lang="en">Whitbread Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Traditional mixed yeast culture. British style character, slightly fruity, with a hint of sulfur production. This yeast can be used for many different beer styles. The most traditional choices would be English style ales including milds, bitters, porters, and English style stouts. North American style ales will also benefit from fermentation with WLP017. The beer will clear easily.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP022 -->
+
+    <owl:Class rdf:about="&mb;WLP022">
+        <rdfs:label xml:lang="en">Essex Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Flavorful British style yeast. Drier finish than many British ale yeast. Produces slightly fruity and bready character.    Good top fermenting yeast strain, is well suited for top cropping (collecting). This yeast is well suited for classic British milds, pale ales, bitters, and stouts. Does not flocculate as much as WLP002 and WLP005.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP023 -->
+
+    <owl:Class rdf:about="&mb;WLP023">
+        <rdfs:label xml:lang="en">Burton Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">From the famous brewing town of Burton upon Trent, England, this yeast is packed with character. It provides delicious subtle fruity flavors like apple, clover honey and pear. Great for all English styles, IPA&apos;s, bitters, and pales. Excellent in porters and stouts.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP028 -->
+
+    <owl:Class rdf:about="&mb;WLP028">
+        <rdfs:label xml:lang="en">Edinburgh Scottish Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Scotland is famous for its malty, strong ales. This yeast can reproduce complex, flavorful Scottish style ales. This yeast can be an everyday strain, similar to WLP001. Hop character is not muted with this strain, as it is with WLP002.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP029 -->
+
+    <owl:Class rdf:about="&mb;WLP029">
+        <rdfs:label xml:lang="en">German Ale/Kölsch Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">From a small brewpub in Cologne, Germany, this yeast works great in Kölsch and Alt style beers. Good for light beers like blond and honey. Accentuates hop flavors, similar to WLP001. The slight sulfur produced during fermentation will disappear with age and leave a super clean, lager like ale.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP036 -->
+
+    <owl:Class rdf:about="&mb;WLP036">
+        <rdfs:label xml:lang="en">Dusseldorf Alt Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Traditional Alt yeast from Dusseldorf, Germany. Produces clean, slightly sweet alt beers. Does not accentuate hop flavor as WLP029 does.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP037 -->
+
+    <owl:Class rdf:about="&mb;WLP037">
+        <rdfs:label xml:lang="en">Yorkshire Square Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This yeast produces a beer that is malty, but well-balanced. Expect flavors that are toasty with malt-driven esters. Highly flocculent and good choice for English pale ales, English brown ales, and mild ales.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP038 -->
+
+    <owl:Class rdf:about="&mb;WLP038">
+        <rdfs:label xml:lang="en">Manchester Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Top-fermenting strain that is traditionally good for top-cropping. Moderately flocculent with a clean, dry finish. Low ester profile, producing a highly balanced English-style beer.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP039 -->
+
+    <owl:Class rdf:about="&mb;WLP039">
+        <rdfs:label xml:lang="en">East Midlands Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">British style ale yeast with a very dry finish. Medium to low fruit and fusel alcohol production. Good top fermenting yeast strain, is well suited for top cropping (collecting). This yeast is well suited for pale ales, ambers, porters, and stouts.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP041 -->
+
+    <owl:Class rdf:about="&mb;WLP041">
+        <rdfs:label xml:lang="en">Pacific Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">A popular ale yeast from the Pacific Northwest. The yeast will clear from the beer well, and leave a malty profile. More fruity than WLP002, English Ale Yeast. Good yeast for English style ales including milds, bitters, IPA, porters, and English style stouts.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP045 -->
+
+    <owl:Class rdf:about="&mb;WLP045">
+        <rdfs:label xml:lang="en">Scotch Whiskey Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">A strain that was widely used for Scotch Whiskey production from the early 1950s, producing a complex array of ester compounds and fusel oils, as well as some spicy, clove character. Suitable for Scotch Whiskey or American-style Whiskey. Used in high-gravity beers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP050 -->
+
+    <owl:Class rdf:about="&mb;WLP050">
+        <rdfs:label xml:lang="en">Tennessee Whiskey Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Suitable for American-style whiskey and bourbon. This yeast is famous for creating rich, smooth flavors. Clean and dry fermenting yeast. Will tolerate high alcohol concentrations (15%), and ester production is low. Also popular in high-gravity beers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP051 -->
+
+    <owl:Class rdf:about="&mb;WLP051">
+        <rdfs:label xml:lang="en">California Ale V Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">From Northern California. This strain is more fruity than WLP001, and slightly more flocculent. Attenuation is lower, resulting in a fuller bodied beer than with WLP001.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP060 -->
+
+    <owl:Class rdf:about="&mb;WLP060">
+        <rdfs:label xml:lang="en">American Ale Yeast Blend</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Our most popular yeast strain is WLP001, California Ale Yeast. This blend celebrates the strengths of California- clean, neutral fermentation, versatile usage, and adds two other strains that belong to the same &apos;clean/neutral&apos; flavor category. The additional strains create complexity to the finished beer. This blend tastes more lager like than WLP001. Hop flavors and bitterness are accentuated, but not to the extreme of California. Slight sulfur will be produced during fermentation.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP065 -->
+
+    <owl:Class rdf:about="&mb;WLP065">
+        <rdfs:label xml:lang="en">American Whiskey Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Yeast strain that produces low ester profile and moderate fusel oils. Temperature and alcohol tolerant and suitable for American-style whiskey using barley or corn base. Also used in high-gravity beers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP070 -->
+
+    <owl:Class rdf:about="&mb;WLP070">
+        <rdfs:label xml:lang="en">Bourbon Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">From a tradtional distillery in the heart of Bourbon country, this strain produces a carmel, malty character with balanced ester profile. Suitable for Bourbon or other American Whiskey with barley, rye, or corn as the base grain. Used in high-gravity beers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP072 -->
+
+    <owl:Class rdf:about="&mb;WLP072">
+        <rdfs:label xml:lang="en">French Ale</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Clean strain that complements malt flavor. Low to moderate esters, when fermentation temperature is below 70°F.  Moderate plus ester character over 70°F.  Low diacetyl production. Good yeast strain for Biere de Garde, blond, amber, brown ales, and specialty beers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP076 -->
+
+    <owl:Class rdf:about="&mb;WLP076">
+        <rdfs:label xml:lang="en">Old Sonoma Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Yeast from an historic brewery in Northern California, this strain was embraced by the early pioneers of craft beer in America and continues to be a great choice for those seeking to use a traditional British-style yeast. A neutral and versatile strain, it is a great choice for pale ales, porters, and stouts.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP078 -->
+
+    <owl:Class rdf:about="&mb;WLP078">
+        <rdfs:label xml:lang="en">Neutral Grain Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Marked by a clean, fast fermentation, this strain is ideal for any neutral grain spirit. Alcohol and temperature tolerant. Used in high-gravity beers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP080 -->
+
+    <owl:Class rdf:about="&mb;WLP080">
+        <rdfs:label xml:lang="en">Cream Ale Yeast Blend</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This is a blend of ale and lager yeast strains. The strains work together to create a clean, crisp, light American lager style ale. A pleasing estery aroma may be perceived from the ale yeast contribution. Hop flavors and bitterness are slightly subdued. Slight sulfur will be produced during fermentation, from the lager yeast.
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP085 -->
+
+    <owl:Class rdf:about="&mb;WLP085">
+        <rdfs:label xml:lang="en">English Ale Blend</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">A blend of British ale yeast strains, designed to add complexity to your ale. Moderate fruitiness and mineral-like, with little to no sulfur. Drier than WLP002 and WLP005, but with similar flocculation properties. Good yeast blend for English Pale Ale, Bitter, Porter, Stout, and India Pale Ale.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP090 -->
+
+    <owl:Class rdf:about="&mb;WLP090">
+        <rdfs:label xml:lang="en">San Diego Super Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">A super clean, super-fast fermenting strain. A low ester-producing strain that results in a balanced, neutral flavor and aroma profile. Alcohol-tolerant and very versatile for a wide variety of styles. Similar to California Ale Yeast WLP001 but it generally ferments faster.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP099 -->
+
+    <owl:Class rdf:about="&mb;WLP099">
+        <rdfs:label xml:lang="en">Super High Gravity Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Can ferment up to 25% alcohol. From England. Produces ester character that increases with increasing gravity. Malt character dominates at lower gravities.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP300 -->
+
+    <owl:Class rdf:about="&mb;WLP300">
+        <rdfs:label xml:lang="en">Hefeweizen Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This famous German yeast is a strain used in the production of traditional, authentic wheat beers. It produces the banana and clove nose traditionally associated with German wheat beers and leaves the desired cloudy look of traditional German wheat beers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP320 -->
+
+    <owl:Class rdf:about="&mb;WLP320">
+        <rdfs:label xml:lang="en">American Hefeweizen Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This yeast is used to produce the Oregon style American Hefeweizen. Unlike WLP300, this yeast produces a very slight amount of the banana and clove notes. It produces some sulfur, but is otherwise a clean fermenting yeast, which does not flocculate well, producing a cloudy beer.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP351 -->
+
+    <owl:Class rdf:about="&mb;WLP351">
+        <rdfs:label xml:lang="en">Bravarian Weizen Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Former Yeast Lab W51 yeast strain, acquired from Dan McConnell. The description originally used by Yeast Lab still fits: &quot;This strain produces a classic German-style wheat beer, with moderately high, spicy, phenolic overtones reminiscent of cloves.&quot;</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP380 -->
+
+    <owl:Class rdf:about="&mb;WLP380">
+        <rdfs:label xml:lang="en">Hefeweizen IV Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Large clove and phenolic aroma and flavor, with minimal banana. Refreshing citrus and apricot notes. Crisp, drinkable hefeweizen. Less flocculent than WLP300, and sulfur production is higher.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP400 -->
+
+    <owl:Class rdf:about="&mb;WLP400">
+        <rdfs:label xml:lang="en">Belgian Wit Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Slightly phenolic and tart, this is the original yeast used to produce Wit in Belgium.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP410 -->
+
+    <owl:Class rdf:about="&mb;WLP410">
+        <rdfs:label xml:lang="en">Belgian Wit II Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Less phenolic than WLP400, and more spicy. Will leave a bit more sweetness, and flocculation is higher than WLP400. Use to produce Belgian Wit, spiced Ales, wheat Ales, and specialty Beers.
+
+Notice to brewers: Tends to take a long time to start; brewers should plan this into their brewing schedule. Needs heavy aeration and nutrients. Allow temperature to free rise.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP500 -->
+
+    <owl:Class rdf:about="&mb;WLP500">
+        <rdfs:label xml:lang="en">Trappist Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">From one of the few remaining Trappist breweries remaining in the world, this yeast produces the distinctive fruitiness and plum characteristics. Excellent yeast for high gravity beers, Belgian ales, dubbels and trippels.
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP510 -->
+
+    <owl:Class rdf:about="&mb;WLP510">
+        <rdfs:label xml:lang="en">Bastogne Belgian Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">A high gravity, Trappist style ale yeast. Produces dry beer with slight acidic finish. More ‘clean’ fermentation character than WLP500 or WLP530. Not as spicy as WLP530 or WLP550. Excellent yeast for high gravity beers, Belgian ales, dubbels and trippels.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP515 -->
+
+    <owl:Class rdf:about="&mb;WLP515">
+        <rdfs:label xml:lang="en">Antwerp Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Clean, almost lager like Belgian type ale yeast. Good for Belgian type pales ales and amber ales, or with blends to combine with other Belgian type yeast strains. Biscuity, ale like aroma present. Hop flavors and bitterness are accentuated. Slight sulfur will be produced during fermentation, which can give the yeast a lager like flavor profile.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP530 -->
+
+    <owl:Class rdf:about="&mb;WLP530">
+        <rdfs:label xml:lang="en">Abbey Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Used to produce Trappist style beers. Similar to WLP500, but is less fruity and more alcohol tolerant (up to 15% ABV). Excellent yeast for high gravity beers, Belgian ales, dubbels and trippels.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP540 -->
+
+    <owl:Class rdf:about="&mb;WLP540">
+        <rdfs:label xml:lang="en">Abbey IV Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">An authentic Trappist style yeast. Use for Belgian style ales, dubbels, tripples, and specialty beers. Fruit character is medium, in between WLP500 (high) and WLP530 (low).</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP545 -->
+
+    <owl:Class rdf:about="&mb;WLP545">
+        <rdfs:label xml:lang="en">Belgian Strong Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">From the Ardennes region of Belgium, this classic yeast strain produces moderate levels of ester and spicy phenolic character. Typically results in a dry, but balanced finish. This yeast is well suited for Belgian dark strongs, Abbey Ales, and Christmas beers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP550 -->
+
+    <owl:Class rdf:about="&mb;WLP550">
+        <rdfs:label xml:lang="en">Belgian Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Saisons, Belgian Ales, Belgian Reds, Belgian Browns, and White beers are just a few of the classic Belgian beer styles that can be created with this yeast strain. Phenolic and spicy flavors dominate the profile, with less fruitiness then WLP500.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP565 -->
+
+    <owl:Class rdf:about="&mb;WLP565">
+        <rdfs:label xml:lang="en">Belgian Saison I Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Classic Saison yeast from Wallonia. It produces earthy, peppery, and spicy notes. Slightly sweet. With high gravity saisons, brewers may wish to dry the beer with an alternate yeast added after 75% fermentation.
+Note to brewers: This strain tends to stall out in fermentation and then restart as long as two weeks later. Make sure the wort is well-oxygenated and allow the temperature to free rise in order to ensure complete fermentation. Some brewers add WLP001 to finish.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP566 -->
+
+    <owl:Class rdf:about="&mb;WLP566">
+        <rdfs:label xml:lang="en">Belgian Saison II Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Saison strain with more fruity ester production than with WLP565. Moderately phenolic, with a clove-like characteristic in finished beer flavor and aroma. Ferments faster than WLP565.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP568 -->
+
+    <owl:Class rdf:about="&mb;WLP568">
+        <rdfs:label xml:lang="en"> Belgian Style Sasion Ale Yeast Blend</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This blend melds Belgian style ale and saison strains. The strains work in harmony to create complex, fruity aromas and flavors. The blend of yeast strains encourages complete fermentation in a timely manner. Phenolic, spicy, earthy, and clove like flavors are also created.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP570 -->
+
+    <owl:Class rdf:about="&mb;WLP570">
+        <rdfs:label xml:lang="en">Belgian Golden Ale Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">From East Flanders, versatile yeast that can produce light Belgian ales to high gravity Belgian beers (12% ABV). A combination of fruitiness and phenolic characteristics dominate the flavor profile. Some sulfur is produced during fermentation, which will dissipate following the end of fermentation.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP575 -->
+
+    <owl:Class rdf:about="&mb;WLP575">
+        <rdfs:label xml:lang="en"> Belgian Style Ale Yeast Blend</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">A blend of Trappist type yeast (2) and one Belgian ale type yeast. This creates a versatile blend that can be used for Trappist type beer, or a myriad of beers that can be described as &apos;Belgian type&apos;.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP585 -->
+
+    <owl:Class rdf:about="&mb;WLP585">
+        <rdfs:label xml:lang="en">Belgian Saison III Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Produces beer with a high fruit ester characteristic, as well as some slight tartness. Finishes slightly malty, which balances out the esters. Also produces low levels of clovey phenolics. Great yeast choice for a summer Saison that is light and easy-drinking.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP630 -->
+
+    <owl:Class rdf:about="&mb;WLP630">
+        <rdfs:label xml:lang="en">Berliner Weisse Blend</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">A blend of a traditional German Weizen yeast and Lactobacillus to create a subtle, tart, drinkable beer. Can take several months to develop tart character. Perfect for traditional Berliner Weisse.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP644 -->
+
+    <owl:Class rdf:about="&mb;WLP644">
+        <rdfs:label xml:lang="en">Brettanomyces Bruxellensis Trois</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This Belgian strain, used traditionally for 100% Brettanomyces fermentations, produces a slightly tart beer with delicate characteristics of mango and pineapple. Can also be used to produce effervescence when bottle-conditioning.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP645 -->
+
+    <owl:Class rdf:about="&mb;WLP645">
+        <rdfs:label xml:lang="en">Brettanomyces Claussenii</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Low intensity Brett character. Originally isolated from strong English stock beer, in the early 20th century. The Brett flavors produced are more subtle than WLP650 and WLP653. More aroma than flavor contribution. Fruity, pineapple like aroma. B. claussenii is closely related to B. anomalus.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP650 -->
+
+    <owl:Class rdf:about="&mb;WLP650">
+        <rdfs:label xml:lang="en">Brettanomyces Bruxellensis</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Medium intensity Brett character. Classic strain used in secondary fermentation for Belgian style beers and lambics. One Trappist brewery uses this strain in secondary fermentation and bottling to produce their characteristic flavor.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP653 -->
+
+    <owl:Class rdf:about="&mb;WLP653">
+        <rdfs:label xml:lang="en">Brettanomyces Lambicus</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">High intensity Brett character. Defines the &quot;Brett character&quot;: Horsey, smoky and spicy flavors. As the name suggests, this strain is found most often in Lambic style beers, which are spontaneously fermented beers. Also found in Flanders and sour brown style beers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP655 -->
+
+    <owl:Class rdf:about="&mb;WLP655">
+        <rdfs:label xml:lang="en">Belgian Sour Mix 1</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">A unique blend perfect for Belgian style beers. Includes Brettanomyces, Saccharomyces, and the bacterial strains Lactobacillus and Pediococcus.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP665 -->
+
+    <owl:Class rdf:about="&mb;WLP665">
+        <rdfs:label xml:lang="en">Flemish Ale Blend</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Blended culture used to produce the classic beer styles of the West Flanders region of Belgium . A proprietary blend of Saccharomyces yeasts, Brettanomyces, Lactobacillus, and Pediococcus, this culture creates a more complex, dark stone fruit characteristic than WLP 655 Belgian Sour Mix.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP670 -->
+
+    <owl:Class rdf:about="&mb;WLP670">
+        <rdfs:label xml:lang="en">American Farmhouse Blend</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Inspired by local American brewers crafting semi-traditional Belgian-style ales. This blend creates a complex flavor profile with a moderate level of sourness. It consists of a traditional farmhouse yeast strain and Brettanomyces. Great yeast for farmhouse ales, Saisons, and other Belgian-inspired beers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP675 -->
+
+    <owl:Class rdf:about="&mb;WLP675">
+        <rdfs:label xml:lang="en">Malolactic Cultures</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Malolactic Fermentation is the conversion of malic acid to lactic acid by bacteria from the lactic acid bacteria family.  Lactic acid is less acidic than malic acid, which in turn decreases acidity and helps to soften and/or round out some of the flavors in wine. These liquid cultures are available in vials to inoculate 6 gallons or 1 liter sizes to inoculate 60 gallons.
+Please note: We recommend caution with using WLP675 with wine kits, which contain potassium sorbate and effect the viability of malolactic bacteria.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP677 -->
+
+    <owl:Class rdf:about="&mb;WLP677">
+        <rdfs:label xml:lang="en">Lactobacillus Bacteria</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This lactic acid bacteria produces moderate levels of acidity and sour flavors found in lambics, Berliner Weiss, sour brown ale and gueze.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP700 -->
+
+    <owl:Class rdf:about="&mb;WLP700">
+        <rdfs:label xml:lang="en">Flor Sherry Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This yeast develops a film (flor) on the surface of the wine. Creates green almond, granny smith and nougat characteristics found in sherry. Can also be used for Port, Madeira and other sweet styles. For use in secondary fermentation. Slow fermentor.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP705 -->
+
+    <owl:Class rdf:about="&mb;WLP705">
+        <rdfs:label xml:lang="en">Sake Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">For use in rice based fermentations. For sake, use this yeast in conjunction with Koji (to produce fermentable sugar). WLP705 produces full body sake character, and subtle fragrance.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP707 -->
+
+    <owl:Class rdf:about="&mb;WLP707">
+        <rdfs:label xml:lang="en">California Pinot Noir Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Isolated from Pinot Noir grapes by White Labs in Davis, CA. This strain produces fruity and complex aromas, and is an ideal choice for hardy red wine varieties, as well as aromatic white wines such as Chardonnay. This strain is reliable for difficult fermentations.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP709 -->
+
+    <owl:Class rdf:about="&mb;WLP709">
+        <rdfs:label xml:lang="en">Sake #9 Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">For use in rice-based fermentations. Traditional strain used in Ginjo-shu production because of the yeast’s development of high fragrance components. Also a fairly strong fermenter, but producing a foamless fermentation.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP715 -->
+
+    <owl:Class rdf:about="&mb;WLP715">
+        <rdfs:label xml:lang="en">Champagne Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Classic yeast, used to produce champagne, cider, dry meads, dry wines, or to fully attenuate barley wines/ strong ales. Neutral.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP718 -->
+
+    <owl:Class rdf:about="&mb;WLP718">
+        <rdfs:label xml:lang="en">Avize Wine Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Champagne isolate used for complexity in whites. Contributes elegance, especially in barrel fermented Chardonnays.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP720 -->
+
+    <owl:Class rdf:about="&mb;WLP720">
+        <rdfs:label xml:lang="en">Sweet Mead/Wine Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">A wine yeast strain that is less attenuative than WLP715, leaving some residual sweetness. Slightly fruity and will tolerate alcohol concentrations up to 15%. A good choice for sweet mead and cider, as well as Blush wines, Gewürztraminer, Sauternes, Riesling.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP727 -->
+
+    <owl:Class rdf:about="&mb;WLP727">
+        <rdfs:label xml:lang="en">Steinberg-Geisenheim Wine Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">German in origin, this yeast has high fruit/ester production. Perfect for Riesling and Gewürztraminer. Moderate fermentation characteristics and cold tolerant.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP730 -->
+
+    <owl:Class rdf:about="&mb;WLP730">
+        <rdfs:label xml:lang="en">Chardonnay White Wine Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Dry wine yeast. Slight ester production, low sulfur dioxide production. Enhances varietal character. WLP730 is a good choice for all white and blush wines, including Chablis, Chenin Blanc, Semillon, and Sauvignon Blanc. Fermentation speed is moderate.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP735 -->
+
+    <owl:Class rdf:about="&mb;WLP735">
+        <rdfs:label xml:lang="en">French White Wine Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Classic yeast for white wine fermentation. Slow to moderate fermenter and foam producer. Gives an enhanced creamy texture.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP740 -->
+
+    <owl:Class rdf:about="&mb;WLP740">
+        <rdfs:label xml:lang="en">Merlot Red Wine Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Neutral, low fusel alcohol production. Will ferment to dryness, alcohol tolerance to 18%. Vigorous fermenter. WLP740 is well suited for Merlot, Shiraz, Pinot Noir, Chardonnay, Cabernet, Sauvignon Blanc, and Semillon.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP749 -->
+
+    <owl:Class rdf:about="&mb;WLP749">
+        <rdfs:label xml:lang="en">Assmanshausen Wine Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">German red wine yeast, which results in spicy, fruit aromas. Perfect for Pinot Noir and Zinfandel. Slow to moderate fermenter which is cold tolerant.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP750 -->
+
+    <owl:Class rdf:about="&mb;WLP750">
+        <rdfs:label xml:lang="en">French Red Wine Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Classic Bordeaux yeast for red wine fermentations. Moderate fermentation characteristics. Tolerates lower fermentation temperatures. Rich, smooth flavor profile.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP760 -->
+
+    <owl:Class rdf:about="&mb;WLP760">
+        <rdfs:label xml:lang="en">Cabernet Red Wine Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">High temperature tolerance. Moderate fermentation speed. Excellent for full-bodied red wines, ester production complements flavor. WLP760 is also suitable for Merlot, Chardonnay, Chianti, Chenin Blanc, and Sauvignon Blanc.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP770 -->
+
+    <owl:Class rdf:about="&mb;WLP770">
+        <rdfs:label xml:lang="en">Suremain Burgundy Wine Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Emphasizes fruit aromas in barrel fermentations. High nutrient requirement to avoid volatile acidity production.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP775 -->
+
+    <owl:Class rdf:about="&mb;WLP775">
+        <rdfs:label xml:lang="en">English Cider Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Classic cider yeast. Ferments dry, but retains flavor from apples. Sulfur is produced during fermentation, but will disappear in first two weeks of aging. Can also be used for wine and high gravity beers.
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP800 -->
+
+    <owl:Class rdf:about="&mb;WLP800">
+        <rdfs:label xml:lang="en">Pilsner Lager Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Classic pilsner strain from the premier pilsner producer in the Czech Republic. Somewhat dry with a malty finish, this yeast is best suited for European pilsner production.
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP802 -->
+
+    <owl:Class rdf:about="&mb;WLP802">
+        <rdfs:label xml:lang="en">Czech Budejovice Lager Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Pilsner lager yeast from Southern Czech Republic. Produces dry and crisp lagers, with low diacetyl production.
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP810 -->
+
+    <owl:Class rdf:about="&mb;WLP810">
+        <rdfs:label xml:lang="en">San Francisco Lager Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This yeast is used to produce the &quot;California Common&quot; style beer. A unique lager strain which has the ability to ferment up to 65 degrees while retaining lager characteristics. Can also be fermented down to 50 degrees for production of marzens, pilsners and other style lagers.
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP815 -->
+
+    <owl:Class rdf:about="&mb;WLP815">
+        <rdfs:label xml:lang="en">Belgian Lager Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Clean, crisp European lager yeast with low sulfur  production. The strain originates from a very old brewery in West Belgium. Great for European style pilsners, dark lagers, Vienna lager, and American style lagers.
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP820 -->
+
+    <owl:Class rdf:about="&mb;WLP820">
+        <rdfs:label xml:lang="en">Oktoberfest/Märzen Lager Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This yeast produces a very malty, bock like style. It does not finish as dry as WLP830. This yeast is much slower in the first generation than WLP830, so we encourage a larger starter to be used the first generation or schedule a longer lagering time.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP830 -->
+
+    <owl:Class rdf:about="&mb;WLP830">
+        <rdfs:label xml:lang="en">German Lager Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This yeast is one of the most widely used lager yeasts in the world. Very malty and clean, great for all German lagers, pilsner, oktoberfest, and marzen.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP833 -->
+
+    <owl:Class rdf:about="&mb;WLP833">
+        <rdfs:label xml:lang="en">German Bock Lager Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">From the Alps of southern Bavaria, this yeast produces a beer that is well balanced between malt and hop character. The excellent malt profile makes it well suited for Bocks, Doppelbocks, and Oktoberfest style beers. Very versatile lager yeast, it is so well balanced that it has gained tremendous popularity for use in Classic American style Pilsners. Also good for Helles style lager beer.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP838 -->
+
+    <owl:Class rdf:about="&mb;WLP838">
+        <rdfs:label xml:lang="en">Southern German Lager Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This yeast is characterized by a malty finish and balanced aroma. It is a strong fermentor, produces slight sulfur, and low diacetyl.
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP840 -->
+
+    <owl:Class rdf:about="&mb;WLP840">
+        <rdfs:label xml:lang="en">American Lager Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This yeast is used to produce American style lagers. Dry and clean with a very slight apple fruitiness. Sulfur and diacetyl production is minimal.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP860 -->
+
+    <owl:Class rdf:about="&mb;WLP860">
+        <rdfs:label xml:lang="en">Munich Helles Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">This yeast helps to produce a malty, but balanced traditional Munich-style lager. Clean and strong fermenter, it&apos;s great for a variety of lager styles ranging from Helles to Rauchbier.
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP862 -->
+
+    <owl:Class rdf:about="&mb;WLP862">
+        <rdfs:label xml:lang="en">Cry Havoc</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Licensed from Charlie Papazian, this strain can ferment at ale and lager temperatures, allowing brewers to produce diverse beer styles. The recipes in both Papazian&apos;s books, The Complete Joy of Homebrewing and The Homebrewers Companion, were originally developed and brewed with this yeast. Optimum Lagering Temperature: 32-37°F</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP885 -->
+
+    <owl:Class rdf:about="&mb;WLP885">
+        <rdfs:label xml:lang="en">Zurich Lager Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">Swiss style lager yeast. With proper care, this yeast can be used to produce lager beer over 11% ABV. Sulfur and diacetyl production is minimal. Original culture provided to White Labs by Marc Sedam.
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP920 -->
+
+    <owl:Class rdf:about="&mb;WLP920">
+        <rdfs:label xml:lang="en">Old Bavarian Lager Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">From Southern Germany, this yeast finishes malty with a slight ester profile. Use in beers such as Oktoberfest, Bock, and Dark Lagers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#WLP940 -->
+
+    <owl:Class rdf:about="&mb;WLP940">
+        <rdfs:label xml:lang="en">Mexican Lager Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Liquid_Yeast"/>
+        <rdfs:comment xml:lang="en">From Mexico City, this yeast produces clean lager beer, with a crisp finish. Good for Mexican style light lagers, as well as dark lagers. This is one of the best lager strains in the White Labs yeast bank; try it with any lager.
+</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Warrior -->
+
+    <owl:Class rdf:about="&mb;Warrior">
+        <rdfs:label>Warrior</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Water -->
+
+    <owl:Class rdf:about="&mb;Water">
+        <rdfs:label xml:lang="en">Water</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Ingredient"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Wheat -->
+
+    <owl:Class rdf:about="&mb;Wheat">
+        <rdfs:label xml:lang="de">Weizen</rdfs:label>
+        <rdfs:label xml:lang="en">Wheat</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Grain"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Wheat_Beer -->
+
+    <owl:Class rdf:about="&mb;Wheat_Beer">
+        <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Willamette -->
+
+    <owl:Class rdf:about="&mb;Willamette">
+        <rdfs:label xml:lang="en">Willamette</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Hops"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Wood-Aged_Beer -->
+
+    <owl:Class rdf:about="&mb;Wood-Aged_Beer">
+        <rdfs:label>Wood-Aged Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Mixed"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Wood_Aged_Sour_Beer -->
+
+    <owl:Class rdf:about="&mb;Wood_Aged_Sour_Beer">
+        <rdfs:label xml:lang="en">Wood Aged Sour Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wood-Aged_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Wood_and_Barrel_Aged_Dark_Beer -->
+
+    <owl:Class rdf:about="&mb;Wood_and_Barrel_Aged_Dark_Beer">
+        <rdfs:label xml:lang="en">Wood and Barrel Aged Dark Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wood-Aged_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Wood_and_Barrel_Aged_Pale_or_Amber_Beer -->
+
+    <owl:Class rdf:about="&mb;Wood_and_Barrel_Aged_Pale_or_Amber_Beer">
+        <rdfs:label xml:lang="en">Wood and Barrel Aged Pale or Amber Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wood-Aged_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Wood_and_Barrel_Aged_Strong_Beer -->
+
+    <owl:Class rdf:about="&mb;Wood_and_Barrel_Aged_Strong_Beer">
+        <rdfs:label xml:lang="en">Wood and Barrel Aged Strong Beer</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Wood-Aged_Beer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Yeast -->
+
+    <owl:Class rdf:about="&mb;Yeast">
+        <rdfs:label xml:lang="de">Hefe</rdfs:label>
+        <rdfs:label xml:lang="en">Yeast</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&mb;Ingredient"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2001/vcard-rdf/3.0#Address -->
+
+    <owl:Class rdf:about="&vcard;Address">
+        <rdfs:label xml:lang="en">Address</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="&xsd;OWLDatatypeImpl_02f130d4_6286_4432_aca6_d3e66c9930b2">
+        <rdfs:label xml:lang="en">integer</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&mb;OWLAnnotationPropertyImpl_8af440ef_b33b_48b9_85a6_68879a8aeec5">
+        <rdfs:label xml:lang="en">styleNumber</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&rdf;OWLDatatypeImpl_d6319a22_41b8_4e0d_b6ad_807d2ccced34">
+        <rdfs:label xml:lang="en">PlainLiteral</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&rdfs;OWLAnnotationPropertyImpl_59e91b80_2d74_4c6b_95cc_78d05fb0a320">
+        <rdfs:label xml:lang="en">label</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&xsd;OWLDatatypeImpl_ac4c3a9a_eac5_4189_8108_6640ee5331ae">
+        <rdfs:label xml:lang="en">float</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&mb;OWLAnnotationPropertyImpl_3b8a2cce_06fd_4121_9995_5cba3b0244a3">
+        <rdfs:label xml:lang="en">source</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&rdfs;OWLAnnotationPropertyImpl_a03afc16_a0ba_4b22_8069_fd7f31ec1cbc">
+        <rdfs:label xml:lang="en">comment</rdfs:label>
+    </rdf:Description>
+    <rdf:Description rdf:about="&mb;OWLAnnotationPropertyImpl_febc7d8e_d826_48f2_913c_1b3560da57e1">
+        <rdfs:label xml:lang="en">styleLetter</rdfs:label>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
