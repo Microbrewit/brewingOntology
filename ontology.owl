@@ -10,7 +10,6 @@
     <!ENTITY gn "http://www.geonames.org/ontology#" >
     <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
     <!ENTITY jms "http://jena.hpl.hp.com/2003/08/jms#" >
-    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
     <!ENTITY vcard "http://www.w3.org/2001/vcard-rdf/3.0#" >
     <!ENTITY daml "http://www.daml.org/2001/03/daml+oil#" >
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
@@ -25,7 +24,6 @@
      xmlns:wgs84_pos="http://www.w3.org/2003/01/geo/wgs84_pos#"
      xmlns:foaf="http://xmlns.com/foaf/0.1/"
      xmlns:jms="http://jena.hpl.hp.com/2003/08/jms#"
-     xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:daml="http://www.daml.org/2001/03/daml+oil#"
      xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#"
      xmlns:gn="http://www.geonames.org/ontology#"
@@ -186,8 +184,13 @@
     <owl:ObjectProperty rdf:about="&mb;maltedTo">
         <rdfs:label xml:lang="en">maltedTo</rdfs:label>
         <rdfs:domain rdf:resource="&mb;Grain"/>
-        <rdfs:range rdf:resource="&mb;Malt"/>
     </owl:ObjectProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#possibleSubstitutions -->
+
+    <owl:ObjectProperty rdf:about="&mb;possibleSubstitutions"/>
     
 
 
@@ -240,6 +243,12 @@
     
 
 
+    <!-- http://microbrew.it/beer.owl#usedInBeerStyles -->
+
+    <owl:ObjectProperty rdf:about="&mb;usedInBeerStyles"/>
+    
+
+
     <!-- http://www.w3.org/2002/07/owl#topObjectProperty -->
 
     <rdf:Description rdf:about="&owl;topObjectProperty">
@@ -259,12 +268,36 @@
     
 
 
+    <!-- http://microbrew.it/beer.owl#flavorDescription -->
+
+    <owl:DatatypeProperty rdf:about="&mb;flavorDescription"/>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#hasAlphaAcid -->
+
+    <owl:DatatypeProperty rdf:about="&mb;hasAlphaAcid"/>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#hasColour -->
+
+    <owl:DatatypeProperty rdf:about="&mb;hasColour"/>
+    
+
+
     <!-- http://microbrew.it/beer.owl#hasEBC -->
 
     <owl:DatatypeProperty rdf:about="&mb;hasEBC">
         <rdfs:label xml:lang="en">hasEBC</rdfs:label>
         <rdfs:range rdf:resource="&xsd;integer"/>
     </owl:DatatypeProperty>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#hasPPG -->
+
+    <owl:DatatypeProperty rdf:about="&mb;hasPPG"/>
     
 
 
@@ -330,15 +363,6 @@
     
 
 
-    <!-- http://microbrew.it/beer.owl#Acid -->
-
-    <owl:Class rdf:about="&mb;Acid">
-        <rdfs:label xml:lang="en">Acid</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
-    </owl:Class>
-    
-
-
     <!-- http://microbrew.it/beer.owl#Alcohol-Free_Malt_Tonic -->
 
     <owl:Class rdf:about="&mb;Alcohol-Free_Malt_Tonic">
@@ -353,15 +377,6 @@
     <owl:Class rdf:about="&mb;Ale">
         <rdfs:label xml:lang="en">Ale</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mb;BeerStyle"/>
-    </owl:Class>
-    
-
-
-    <!-- http://microbrew.it/beer.owl#Amber -->
-
-    <owl:Class rdf:about="&mb;Amber">
-        <rdfs:label xml:lang="en">Amber</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
     </owl:Class>
     
 
@@ -612,15 +627,6 @@
     
 
 
-    <!-- http://microbrew.it/beer.owl#Aromatic -->
-
-    <owl:Class rdf:about="&mb;Aromatic">
-        <rdfs:label xml:lang="en">Aromatic</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
-    </owl:Class>
-    
-
-
     <!-- http://microbrew.it/beer.owl#Association -->
 
     <owl:Class rdf:about="&mb;Association">
@@ -688,16 +694,6 @@
     <owl:Class rdf:about="&mb;Bamberg-Style_Weiss_Rauchbier">
         <rdfs:label xml:lang="en">Bamberg-Style Weiss Rauchbier</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mb;Smoke_Beer"/>
-    </owl:Class>
-    
-
-
-    <!-- http://microbrew.it/beer.owl#Barley -->
-
-    <owl:Class rdf:about="&mb;Barley">
-        <rdfs:label xml:lang="de">Gerste</rdfs:label>
-        <rdfs:label xml:lang="en">Barley</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Grain"/>
     </owl:Class>
     
 
@@ -870,33 +866,6 @@
     
 
 
-    <!-- http://microbrew.it/beer.owl#Biscuit -->
-
-    <owl:Class rdf:about="&mb;Biscuit">
-        <rdfs:label xml:lang="en">Biscuit</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
-    </owl:Class>
-    
-
-
-    <!-- http://microbrew.it/beer.owl#Black -->
-
-    <owl:Class rdf:about="&mb;Black">
-        <rdfs:label xml:lang="en">Black</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
-    </owl:Class>
-    
-
-
-    <!-- http://microbrew.it/beer.owl#Black_Barley -->
-
-    <owl:Class rdf:about="&mb;Black_Barley">
-        <rdfs:label xml:lang="en">Black_Barley</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Barley"/>
-    </owl:Class>
-    
-
-
     <!-- http://microbrew.it/beer.owl#Bock -->
 
     <owl:Class rdf:about="&mb;Bock">
@@ -921,15 +890,6 @@
     <owl:Class rdf:about="&mb;Brewery">
         <rdfs:label xml:lang="en">Brewery</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mb;Organisation"/>
-    </owl:Class>
-    
-
-
-    <!-- http://microbrew.it/beer.owl#Briess -->
-
-    <owl:Class rdf:about="&mb;Briess">
-        <rdfs:label xml:lang="en">Briess</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
     </owl:Class>
     
 
@@ -966,33 +926,6 @@
     <owl:Class rdf:about="&mb;California_Common_Beer">
         <rdfs:label xml:lang="en">California Common Beer</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mb;Hybrid_Beer"/>
-    </owl:Class>
-    
-
-
-    <!-- http://microbrew.it/beer.owl#Caramel -->
-
-    <owl:Class rdf:about="&mb;Caramel">
-        <rdfs:label xml:lang="en">Caramel</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
-    </owl:Class>
-    
-
-
-    <!-- http://microbrew.it/beer.owl#Carapils -->
-
-    <owl:Class rdf:about="&mb;Carapils">
-        <rdfs:label xml:lang="en">Carapils</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
-    </owl:Class>
-    
-
-
-    <!-- http://microbrew.it/beer.owl#Chocolate -->
-
-    <owl:Class rdf:about="&mb;Chocolate">
-        <rdfs:label xml:lang="en">Chocolate</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
     </owl:Class>
     
 
@@ -1177,6 +1110,14 @@
     
 
 
+    <!-- http://microbrew.it/beer.owl#Fermentables -->
+
+    <owl:Class rdf:about="&mb;Fermentables">
+        <rdfs:subClassOf rdf:resource="&mb;Ingredient"/>
+    </owl:Class>
+    
+
+
     <!-- http://microbrew.it/beer.owl#Festival -->
 
     <owl:Class rdf:about="&mb;Festival">
@@ -1185,11 +1126,10 @@
     
 
 
-    <!-- http://microbrew.it/beer.owl#Flaked -->
+    <!-- http://microbrew.it/beer.owl#Flavours_and_Characteristics -->
 
-    <owl:Class rdf:about="&mb;Flaked">
-        <rdfs:label xml:lang="en">Flaked</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Barley"/>
+    <owl:Class rdf:about="&mb;Flavours_and_Characteristics">
+        <rdfs:subClassOf rdf:resource="&mb;Something"/>
     </owl:Class>
     
 
@@ -1217,6 +1157,14 @@
     <owl:Class rdf:about="&mb;French_Ale">
         <rdfs:label xml:lang="en">French Ale</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mb;Ale"/>
+    </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Fruit -->
+
+    <owl:Class rdf:about="&mb;Fruit">
+        <rdfs:subClassOf rdf:resource="&mb;Ingredient"/>
     </owl:Class>
     
 
@@ -1404,15 +1352,6 @@
     
 
 
-    <!-- http://microbrew.it/beer.owl#Hulls -->
-
-    <owl:Class rdf:about="&mb;Hulls">
-        <rdfs:label xml:lang="en">Hulls</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Barley"/>
-    </owl:Class>
-    
-
-
     <!-- http://microbrew.it/beer.owl#Hybrid_Beer -->
 
     <owl:Class rdf:about="&mb;Hybrid_Beer">
@@ -1565,16 +1504,6 @@
     
 
 
-    <!-- http://microbrew.it/beer.owl#Malt -->
-
-    <owl:Class rdf:about="&mb;Malt">
-        <rdfs:label xml:lang="de">Malz</rdfs:label>
-        <rdfs:label xml:lang="en">Malt</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Ingredient"/>
-    </owl:Class>
-    
-
-
     <!-- http://microbrew.it/beer.owl#Microbrewery -->
 
     <owl:Class rdf:about="&mb;Microbrewery">
@@ -1598,15 +1527,6 @@
     <owl:Class rdf:about="&mb;Munchner-Style_Helles">
         <rdfs:label xml:lang="en">Münchner-Style Helles</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mb;Golden_Lager"/>
-    </owl:Class>
-    
-
-
-    <!-- http://microbrew.it/beer.owl#Munich -->
-
-    <owl:Class rdf:about="&mb;Munich">
-        <rdfs:label xml:lang="en">Munich</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
     </owl:Class>
     
 
@@ -1683,15 +1603,6 @@
     
 
 
-    <!-- http://microbrew.it/beer.owl#Pale -->
-
-    <owl:Class rdf:about="&mb;Pale">
-        <rdfs:label xml:lang="en">Pale</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Malt"/>
-    </owl:Class>
-    
-
-
     <!-- http://microbrew.it/beer.owl#Pale_Ale -->
 
     <owl:Class rdf:about="&mb;Pale_Ale">
@@ -1715,15 +1626,6 @@
     <owl:Class rdf:about="&mb;Pumpkin_Beer">
         <rdfs:label xml:lang="en">Pumpkin Beer</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mb;Speciality_Beer"/>
-    </owl:Class>
-    
-
-
-    <!-- http://microbrew.it/beer.owl#Raw -->
-
-    <owl:Class rdf:about="&mb;Raw">
-        <rdfs:label xml:lang="en">Raw</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Barley"/>
     </owl:Class>
     
 
@@ -1753,29 +1655,11 @@
     
 
 
-    <!-- http://microbrew.it/beer.owl#Rice -->
-
-    <owl:Class rdf:about="&mb;Rice">
-        <rdfs:label xml:lang="en">Rice</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Grain"/>
-    </owl:Class>
-    
-
-
     <!-- http://microbrew.it/beer.owl#Robust_Porter -->
 
     <owl:Class rdf:about="&mb;Robust_Porter">
         <rdfs:label xml:lang="en">Robust Porter</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mb;Porter"/>
-    </owl:Class>
-    
-
-
-    <!-- http://microbrew.it/beer.owl#Rye -->
-
-    <owl:Class rdf:about="&mb;Rye">
-        <rdfs:label xml:lang="en">Rye</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Grain"/>
     </owl:Class>
     
 
@@ -1840,6 +1724,12 @@
         <rdfs:label>Smoke Beer</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mb;Mixed"/>
     </owl:Class>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Something -->
+
+    <owl:Class rdf:about="&mb;Something"/>
     
 
 
@@ -1933,6 +1823,14 @@
     
 
 
+    <!-- http://microbrew.it/beer.owl#Spice -->
+
+    <owl:Class rdf:about="&mb;Spice">
+        <rdfs:subClassOf rdf:resource="&mb;Ingredient"/>
+    </owl:Class>
+    
+
+
     <!-- http://microbrew.it/beer.owl#Stout -->
 
     <owl:Class rdf:about="&mb;Stout">
@@ -1987,15 +1885,6 @@
     
 
 
-    <!-- http://microbrew.it/beer.owl#Torrefied -->
-
-    <owl:Class rdf:about="&mb;Torrefied">
-        <rdfs:label xml:lang="en">Torrefied</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Barley"/>
-    </owl:Class>
-    
-
-
     <!-- http://microbrew.it/beer.owl#Town -->
 
     <owl:Class rdf:about="&mb;Town">
@@ -2036,16 +1925,6 @@
     <owl:Class rdf:about="&mb;Water">
         <rdfs:label xml:lang="en">Water</rdfs:label>
         <rdfs:subClassOf rdf:resource="&mb;Ingredient"/>
-    </owl:Class>
-    
-
-
-    <!-- http://microbrew.it/beer.owl#Wheat -->
-
-    <owl:Class rdf:about="&mb;Wheat">
-        <rdfs:label xml:lang="de">Weizen</rdfs:label>
-        <rdfs:label xml:lang="en">Wheat</rdfs:label>
-        <rdfs:subClassOf rdf:resource="&mb;Grain"/>
     </owl:Class>
     
 
@@ -2138,6 +2017,11 @@
     <owl:NamedIndividual rdf:about="&mb;Admiral">
         <rdf:type rdf:resource="&mb;Hops"/>
         <rdfs:label xml:lang="en">Admiral</rdfs:label>
+        <hasAlphaAcid>15</hasAlphaAcid>
+        <flavorDescription>Known for its bittering potential.</flavorDescription>
+        <possibleSubstitutions rdf:resource="&mb;Challenger"/>
+        <possibleSubstitutions rdf:resource="&mb;Northdown"/>
+        <possibleSubstitutions rdf:resource="&mb;Target"/>
     </owl:NamedIndividual>
     
 
@@ -2147,6 +2031,8 @@
     <owl:NamedIndividual rdf:about="&mb;Ahtanum">
         <rdf:type rdf:resource="&mb;Hops"/>
         <rdfs:label xml:lang="en">Ahtanum</rdfs:label>
+        <hasAlphaAcid>5</hasAlphaAcid>
+        <flavorDescription>Floral, citrus, sharp, and piney.</flavorDescription>
     </owl:NamedIndividual>
     
 
@@ -2156,6 +2042,19 @@
     <owl:NamedIndividual rdf:about="&mb;Amarillo">
         <rdf:type rdf:resource="&mb;Hops"/>
         <rdfs:label xml:lang="en">Amarillo</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Amber_Malt -->
+
+    <owl:NamedIndividual rdf:about="&mb;Amber_Malt">
+        <rdf:type rdf:resource="&mb;Fermentables"/>
+        <rdf:type rdf:resource="&mb;Grain"/>
+        <rdfs:label>Amber Malt</rdfs:label>
+        <hasColour>20</hasColour>
+        <hasPPG>34
+</hasPPG>
     </owl:NamedIndividual>
     
 
@@ -2395,6 +2294,14 @@
     
 
 
+    <!-- http://microbrew.it/beer.owl#Northdown -->
+
+    <owl:NamedIndividual rdf:about="&mb;Northdown">
+        <rdf:type rdf:resource="&mb;Hops"/>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://microbrew.it/beer.owl#Northern_Brewer -->
 
     <owl:NamedIndividual rdf:about="&mb;Northern_Brewer">
@@ -2436,6 +2343,18 @@
     <owl:NamedIndividual rdf:about="&mb;Pacific_Gem">
         <rdf:type rdf:resource="&mb;Hops"/>
         <rdfs:label>Pacific Gem</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://microbrew.it/beer.owl#Pale_Ale_Malt -->
+
+    <owl:NamedIndividual rdf:about="&mb;Pale_Ale_Malt">
+        <rdf:type rdf:resource="&mb;Fermentables"/>
+        <rdf:type rdf:resource="&mb;Grain"/>
+        <rdfs:label>Pale Ale Malt</rdfs:label>
+        <hasColour>2</hasColour>
+        <hasPPG>37</hasPPG>
     </owl:NamedIndividual>
     
 
